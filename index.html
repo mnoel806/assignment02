@@ -21,22 +21,48 @@
     <form id="search-form" action="">
         <p>Search type:</p>
         <input type="radio" name="search-options" id="search-title">
-        <label for="search-title">Song Title</label><br>
+        <label for="search-title">Song Title ${all.the.titles}</label><br>
         <input type="radio" name="search-options" id="search-artist">
-        <label for="search-options">Artist Name</label><br>
+        <label for="search-options">Artist Name ${all.the.artists}</label><br>
         <input type="radio" name="search-options" id="search-genre">
-        <label for="search-options">Genre</label><br>
+        <label for="search-options">Genre ${all.the.genres}</label><br>
         <br>
         <input type="submit" value="Submit">
+        <input type="reset" value="Clear">
     </form>
 
 
 </section>
+<!-- this will be in that searchform once it's functional -->
+<div class="dropdownmenu">
+    <button onClick="dropFunction()">dropdown</button>
 
+</div>
 <section id="centre2">
+<h1>Browse/Search Results</h1>
+
+<table>
+    <tr>
+        <th>Title
+            <div id="sortButtons">
+                <button id="sortASC" onClick="sortResultsAsc()">ASC</button>
+                <button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
+            </div>
+        </th>
+        <th>Artist</th>
+        <th>Year</th>
+        <th>Genre</th>
+        <th>Popularity</th>
+        <th>""</th>
+    </tr>
+    <!-- forEachEntryfoundByFilter -->
+    createElement("<tr>");
+
+        <!-- This should be a list instead -->
+        createElement("li");
 
 
-
+</table>
 
 </section>
 
@@ -52,14 +78,27 @@
 
 <!-- SingleSongView -->
 <header id="head0">
-    <h1>$Header</h1>
+    <h1>$SingleSongView</h1>
     <button>.onClick(GoToPlaylist)</button>
     <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
+    <button>.onlick(ToGoSearchBrowse) CLOSE</button>
 </header>
 
 
 <section id="left1">
+<h2>Song Information</h2>
+<p>$song.title, $song.artist, $song.artist_type, $song.genre, $song.duration(in mins+secs)</p>
 
+<ul>
+    <header>Analysis Data</header>
+    <li>$song.bpm</li>
+    <li>$song.energy</li>
+    <li>$song.dancey</li>
+    <li>$song.valence</li>
+    <li>$song.acousticness</li>
+    <li>$song.speechiness</li>
+    <li>$song.popularity</li>
+</ul>
 
 
 
@@ -67,8 +106,9 @@
 
 <section id="centre2">
 
-
-
+    <div>
+        <img src="" alt="">chart.js lib - <a href="">idk the chart bit, later</a>
+    </div>
 
 </section>
 
@@ -84,12 +124,18 @@
 
 <!-- PlaylistView -->
 <header id="head0">
-    <h1>$Header</h1>
+    <h1>$PlaylistView</h1>
     <!-- <button>.onClick(GoToPlaylist)</button> -->
     <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
+    <button>.onlick(ToGoSearchBrowse) CLOSE</button>
 </header>
 
 <section id="left1">
+<div>
+    <h1>Playlist Details</h1>
+    <p>${#ofsongsinlist}</p>
+    <p>${popularityrankings?}</p>
+</div>
 
 
 
@@ -114,6 +160,44 @@
 </footer>
 
 </body>
+<script>
+    // dropcode here
+    function dropFunction() {
+        document.querySelector("#dropdownmenu");
+    }
+    // sortAsc
+    function sortResultsAsc() {
+        document.querySelector("");
+        //hidemybutton();
+    }
+    // sortDsc
+    //Shows up only if sortAsc is alread selected
+    function sortResultsDsc() {
+        document.querySelector("");
+    }
+    //this funct will hide the clicked button and reveal the opposite
+    function hideMyButton() {
+        let x = document.querySelector("#sortDSC");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
 
+</script>
+<style>
+    header,
+    section {
+        border-width: 1px;
+        border-style: dashed;
+    }
 
+    div {
+        border-color: crimson;
+        border-style: dotted;
+        border-width: 1px;
+    }
+
+</style>
 </html>
