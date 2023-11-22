@@ -5,162 +5,230 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mattington's Marvelous Adventure!!!</title>
+    <script src="./js/myFuncts.js"></script>
 </head>
+
 <!-- leave what is repeatable for now -->
 <body>
-<!-- SongSearchView -->
-<header id="head0">
-    <h1>$Header</h1>
-    <button>.onClick(GoToPlaylist)</button>
-    <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
-</header>
+    <div id="search-view"> <!-- SongSearchView -->
+        <header id="head0">
+            <h1>$Header</h1>
+            <button>.onClick(GoToPlaylist)</button>
+            <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
+        </header>
 
-<!-- These sections will be replaced as the user does the navigating -->
-<section id="left1">
-    <h1>Basic Search</h1>
-    <form id="search-form" action="">
-        <p>Search type:</p>
-        <input type="radio" name="search-options" id="search-title">
-        <label for="search-title">Song Title ${all.the.titles}</label><br>
-        <input type="radio" name="search-options" id="search-artist">
-        <label for="search-options">Artist Name ${all.the.artists}</label><br>
-        <input type="radio" name="search-options" id="search-genre">
-        <label for="search-options">Genre ${all.the.genres}</label><br>
-        <br>
-        <input type="submit" value="Submit">
-        <input type="reset" value="Clear">
-    </form>
+        <!-- These sections will be replaced as the user does the navigating -->
+        <section id="left1">
+            <h1>Basic Search</h1>
+            <form id="search-form" action="">
+                <p>Search type:</p>
+                <input type="radio" name="search-options" id="search-title">
+                <label for="search-title">Song Title ${all.the.titles}(Dropdown)</label><br>
+                <input type="radio" name="search-options" id="search-artist">
+                <label for="search-options">Artist Name ${all.the.artists}</label><br>
+                <input type="radio" name="search-options" id="search-genre">
+                <label for="search-options">Genre ${all.the.genres}</label><br>
+                <br>
+                <input type="submit" value="Submit">
+                <input type="reset" value="Clear">
+                </form>
 
 
-</section>
-<!-- this will be in that searchform once it's functional -->
-<div class="dropdownmenu">
-    <button onClick="dropFunction()">dropdown</button>
-
-</div>
-<section id="centre2">
-<h1>Browse/Search Results</h1>
-
-<table>
-    <tr>
-        <th>Title
-            <div id="sortButtons">
-                <button id="sortASC" onClick="sortResultsAsc()">ASC</button>
-                <button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
+        </section>
+        <!-- this will be in that searchform once it's functional -->
+        <div class="dropdownmenu">
+            <button onClick="dropFunction()">dropdown</button>
+            <!-- putcode here -->
             </div>
-        </th>
-        <th>Artist</th>
-        <th>Year</th>
-        <th>Genre</th>
-        <th>Popularity</th>
-        <th>""</th>
-    </tr>
-    <!-- forEachEntryfoundByFilter -->
-    createElement("<tr>");
+            <section id="centre2">
+                <h1>Browse/Search Results</h1>
 
-        <!-- This should be a list instead -->
-        createElement("li");
+        <table>
+            <tr>
+                <th>Title
+                    <div id="sortButtons">
+                        <button id="sortASC" onClick="sortResultsAsc()">ASC</button>
+                        <button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
+                    </div>
+                </th>
+                <th>Artist</th>
+                <th>Year</th>
+                <th>Genre</th>
+                <th>Popularity</th>
+                <th>""</th>
+            </tr>
+            <!-- forEachEntryfoundByFilter -->
+            createElement("<tr>");
 
-
-</table>
-
-</section>
-
-<section id="right3">
-
-
-
-
-</section>
-<footer>
-    <h2>FOOTER</h2>
-</footer>
-
-<!-- SingleSongView -->
-<header id="head0">
-    <h1>$SingleSongView</h1>
-    <button>.onClick(GoToPlaylist)</button>
-    <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
-    <button>.onlick(ToGoSearchBrowse) CLOSE</button>
-</header>
+                <!-- This should be a list instead -->
+                createElement("li");
 
 
-<section id="left1">
-<h2>Song Information</h2>
-<p>$song.title, $song.artist, $song.artist_type, $song.genre, $song.duration(in mins+secs)</p>
+        </table>
 
-<ul>
-    <header>Analysis Data</header>
-    <li>$song.bpm</li>
-    <li>$song.energy</li>
-    <li>$song.dancey</li>
-    <li>$song.valence</li>
-    <li>$song.acousticness</li>
-    <li>$song.speechiness</li>
-    <li>$song.popularity</li>
-</ul>
-
-
-
-</section>
-
-<section id="centre2">
-
-    <div>
-        <img src="" alt="">chart.js lib - <a href="">idk the chart bit, later</a>
+        </section>
+        <footer>
+            <h2>FOOTER</h2>
+        </footer>
     </div>
 
-</section>
+    <div id="song-view"> <!-- SingleSongView -->
+        <header id="head0">
+            <h1>$SingleSongView</h1>
+            <button>.onClick(GoToPlaylist)</button>
+            <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
+            <button>.onlick(ToGoSearchBrowse) CLOSE</button>
+        </header>
 
-<section id="right3">
 
+        <section id="left1">
+            <h2>Song Information</h2>
+            <!-- How to get this from the user. ex, use thier selection to load this -->
+            <p>$song.title, $song.artist, $song.artist_type, $song.genre, $song.duration(in mins+secs)</p>
 
-
-
-</section>
-<footer>
-    <h2>FOOTER</h2>
-</footer>
-
-<!-- PlaylistView -->
-<header id="head0">
-    <h1>$PlaylistView</h1>
-    <!-- <button>.onClick(GoToPlaylist)</button> -->
-    <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
-    <button>.onlick(ToGoSearchBrowse) CLOSE</button>
-</header>
-
-<section id="left1">
-<div>
-    <h1>Playlist Details</h1>
-    <p>${#ofsongsinlist}</p>
-    <p>${popularityrankings?}</p>
-</div>
-
+            <ul>
+                <!-- (THIS IS WHERE WE WILL ADD JSON/API INFO ONCE WE GOT IT) -->
+                <h2>Analysis Data</h2>
+                <li>$song.bpm</li>
+                <li>$song.energy</li>
+                <li>$song.dancey</li>
+                <li>$song.valence</li>
+                <li>$song.acousticness</li>
+                <li>$song.speechiness</li>
+                <li>$song.popularity</li>
+                </ul>
 
 
 
-</section>
+        </section>
 
-<section id="centre2">
+        <section id="centre2">
+
+            <div style="display: none;">
+                <canvas id="myChart"> Chart: Exists but doesn't response to anything, yet</canvas>
+            </div>
+            <!-- Chart Base from: (https://www.chartjs.org)-->
+            <div id="theChartBox">
+                    <div>
+                        <!-- <canvas id="myChart"></canvas> MOVED-->
+                        </div>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    
+                    <script>
+                        const ctx = document.querySelector("#myChart");
+
+                                new Chart(ctx, {
+                                    type: 'radar',
+                                    data: {
+                                        labels: [
+                                            'BPM',
+                                            'Energy',
+                                            'Danciness',
+                                            'Valance',
+                                            'Acousticness',
+                                            'Speechiness',
+                                            'Popularity'
+                                        ],
+                                        // (THIS IS WHERE WE WILL ADD THE JSON/API INFO ONCE WE GOT IT)
+                                        datasets: [{
+                                            label: '# OF DATA POINTS',
+                                            data: [82, 59, 84, 41, 56, 52, 70],
+                                            // data: [$song.bpm, $song.energy, $song.danceiness, $song.valance, 
+                                            // $song.acousticness, $song.speechiness, $song.popularity],
+                                            borderWidth: 1
+                                        }]
+
+                                },
+                                options: {
+
+                                    elements: {
+                                        line: {
+                                            borderWidth: 3
+                                        }
+                                    },
+                                    scales: {
+                                        r: {
+                                            angleLines: {
+                                                display: false
+                                            },
+                                            suggestedMin: 20,
+                                            suggestedMax: 100
+                                        }
+                                    }
+                                },
+                            });
+                                </script>
+                            </div>
+                            </section>
+
+        <footer>
+            <h2>FOOTER</h2>
+        </footer>
+    </div>
+
+    <div id="playlist-view"> <!-- PlaylistView -->
+        <header id="head0">
+            <h1>$PlaylistView</h1>
+            <!-- <button>.onClick(GoToPlaylist)</button> -->
+            <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
+            <button>.onlick(ToGoSearchBrowse) CLOSE</button>
+        </header>
+
+    <section id="left1">
+        <div>
+            <h1>Playlist Details</h1>
+            <p>${#ofsongsinlist}</p>
+            <p>${popularityrankings?}</p>
+        </div>
+
+    <table>
+        <tr>
+            <th>Title
+                <!-- <div id="sortButtons">
+                            <button id="sortASC" onClick="sortResultsAsc()">ASC</button>
+                            <button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
+                        </div> -->
+            </th>
+            <th>Artist</th>
+            <th>Year</th>
+            <th>Genre</th>
+            <th>Popularity</th>
+            <th>""</th>
+        </tr>
+        <!-- forEachEntryinPlaylist -->
+        <!-- createElement("<tr>");
+                createElement("<td><a href="goToSongPage($t)">")
+                        createElement("</a></td>")
+                createElement("<td>a")
+                    createElement("</a></td>") -->
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td><button>RMV</button></td>
+        </tr>
+        <!-- Endof"Loop" -->
+        </table>
+
+    </section>
+
+    <section id="centre2">
 
 
 
 
-</section>
+    </section>
 
-<section id="right3">
-
-
-
-
-</section>
-<footer>
-    <h2>FOOTER</h2>
-</footer>
+    <footer>
+        <h2>FOOTER</h2>
+    </footer>
+    </div>
 
 </body>
-<script>
+<!-- Putting Scripts Here -->
+<!-- <script>
     // dropcode here
     function dropFunction() {
         document.querySelector("#dropdownmenu");
@@ -185,19 +253,64 @@
         }
     }
 
-</script>
+</script> -->
+<!-- Putting Styles Here -->
 <style>
-    header,
-    section {
-        border-width: 1px;
-        border-style: dashed;
-    }
+    
 
-    div {
+    /* div#{
         border-color: crimson;
         border-style: dotted;
-        border-width: 1px;
+        border-width: 5px;
+    } */
+    #search-view, #song-view, #playlist-view {
+        width: 800px;
+        display: inline-block;
+        border-color: blue;
+        border-style: dotted;
+        border-width: 5px;
     }
-
+    #head0{
+        margin-bottom: 5px;
+        position: relative;
+        overflow: hidden;
+        border: 3px;
+        background-color: aquamarine;
+    }
+    #head0>button {
+        float: right;
+        height: 30px;
+    }
+    /* section {
+        border-width: 1px;
+        border-style: dashed;
+    } */
+    #left1 {
+        width: 300px;
+        height: 320px;
+        display: inline-block;
+        margin-right: 6px;
+        border-color: crimson;
+        border-style: dotted;
+        border-width: 5px;
+    }
+    #centre2 {
+        width: 300px;
+        height: 320px;
+        display: inline-block;
+        margin-right: 6px;
+        border-color: crimson;
+        border-style: dotted;
+        border-width: 5px;
+    }
+    footer {
+        display: block;
+        height: 100px;
+        width: 100%;
+        border: 5px;
+        border-color: darkorange;
+    }
+    
 </style>
+
 </html>
