@@ -10,9 +10,112 @@
 
 <!-- leave what is repeatable for now -->
 <body>
-    <div id="search-view"> <!-- SongSearchView -->
+<div id="counter">1</div>
+<button onclick="showHide()">12345</button>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // const url_songs = "https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php";
+        const url_songs = "starting-files/sample-songs.json";
+        const artistURL = "starting-files/artists.json"
+        const artistSel = document.querySelector("#artistSearch");
+        const songSel = document.querySelector("#songSearch")
+        document.querySelector("#search-view").style.display = "block";
+        //adds prompts
+
+        // if (!doTheThing) {
+        //     error handling
+        // } else {//do the func};
+
+        //Now Fetching
+        fetch(artistURL)
+            .then(response => response.json())
+            //or function(response){return response.json};
+            .then(data => { populateArtists(data) });
+
+        const opt1 = document.createElement("option");
+        opt1.textContent = "Pick an Artist";
+        opt1.value = 0;
+        artistSel.appendChild(opt1);
+
+    }); //END-DOMContentLoaded
+
+    //Populate those Artists Fields
+    function populateArtists(artistData) {
+        for (let c of artistData) {
+            // let opt = makeOption(c);
+            const opt = document.createElement("option");
+            opt.textContent = c.name;
+            opt.value = c.value;
+            artistSel.appendChild(opt);
+        } //End of options being populated
+
+        artistSel.addEventListener("change", e => {
+            //loads all the songs from 'e' artists into the songSel field
+            populate.songs();
+        })
+    }
+    function populateSongs() {
+        //API QUERY STRING CONSTRUCTO-CON
+        // if (!doTheThing) {
+        //     error handling
+        // } else {//do the func};
+        const url1 = url_songs;
+        // const url2 = url_songs + "?iso =" + artistSel.value;
+        fetch(url1)
+            .then(response => response.json())
+            .then(songData => { populateSongSel(songData) })
+        //add error handling try/catch bits 
+    }
+    function populateSongSel(songData) {
+        for (let c of songData) {
+            //make options
+            let x = makeOption(c);
+            songSel.appendChild(x);
+        }
+    };
+    function makeOption(c) {
+        const opt = document.createElement("option");
+        opt.textContent = c.name;
+        opt.value = c.value;
+        return opt;
+    }
+
+    function eleMaker() {
+        const tr1 = document.createElement("<tr>");
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td");
+        const td3 = document.createElement("td");
+        const td4 = document.createElement("td");
+    }
+
+    function showHide() {
+        let x = document.querySelector("#search-view");
+        let y = document.querySelector("#song-view");
+        let z = document.querySelector("#playlist-view");
+        // if ('class.displayer' > div === "search-view") {
+        //     class.displayer = "#song-view";
+        // }
+        // else if ('class.displayer' > div === "#song-view") {
+        //     class.displayer = "#playlist-view";
+        // }
+        // else ('class.displayer' > div === "#playlist-view") {
+        //     class.displayer = "#search-view";
+        // }
+    }
+        // if (x.style.display === "none") {
+        //     x.style.display = "block";
+        // } else {
+        //     x.style.display = "none";
+        // }
+
+
+
+</script>
+
+<div class="displayer" id="search-view"> <!-- SongSearchView -->
         <header id="head0">
             <h1>$Header</h1>
+            
             <button>.onClick(GoToPlaylist)</button>
             <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
         </header>
@@ -33,46 +136,52 @@
                 <input type="reset" value="Clear">
                 </form>
 
-
+                <div id="searcher">
+                    <select name="artistSearch" id="artistSearch" textContext="Pick"></select>
+                    <select name="songSearch" id="songSearch"></select>
+                </div>
         </section>
         <!-- this will be in that searchform once it's functional -->
-        <div class="dropdownmenu">
-            <button onClick="dropFunction()">dropdown</button>
-            <!-- putcode here -->
-            </div>
+
+
             <section id="centre2">
                 <h1>Browse/Search Results</h1>
-
+                
         <table>
             <tr>
                 <th>Title
-                    <div id="sortButtons">
-                        <button id="sortASC" onClick="sortResultsAsc()">ASC</button>
-                        <button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
-                    </div>
+                    
                 </th>
                 <th>Artist</th>
                 <th>Year</th>
                 <th>Genre</th>
                 <th>Popularity</th>
-                <th>""</th>
+                <th>Button</th>
             </tr>
-            <!-- forEachEntryfoundByFilter -->
-            createElement("<tr>");
-
-                <!-- This should be a list instead -->
-                createElement("li");
-
-
+            <!-- populateTable() -->
+            <tr>
+                <td>a</td>
+                <td>b</td>
+                <td>c</td>
+                <td>d</td>
+                <td>e</td>
+                <td>
+                    <div>button</div>
+                    <!-- <div id="sortButtons">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button id="sortASC" onClick="sortResultsAsc()">ASC</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                </td>
+            </tr>
         </table>
 
-        </section>
+            </section>
         <footer>
             <h2>FOOTER</h2>
         </footer>
     </div>
 
-    <div id="song-view"> <!-- SingleSongView -->
+    <div class="displayer" id="song-view"> <!-- SingleSongView -->
         <header id="head0">
             <h1>$SingleSongView</h1>
             <button>.onClick(GoToPlaylist)</button>
@@ -166,7 +275,7 @@
         </footer>
     </div>
 
-    <div id="playlist-view"> <!-- PlaylistView -->
+    <div class="displayer" id="playlist-view"> <!-- PlaylistView -->
         <header id="head0">
             <h1>$PlaylistView</h1>
             <!-- <button>.onClick(GoToPlaylist)</button> -->
@@ -253,29 +362,27 @@
         //     }
         // }
 
-        const url = "API_THE";
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch(url);
-            then(response)
-            then(data => { doTheStuff })
-        })
 
 </script>
 <!-- Putting Styles Here -->
 <style>
     
-
-    /* div#{
-        border-color: crimson;
+#search-view {
+    display: block;
+    width: 800px;
+        display: inline-block;
+        border-color: blue;
         border-style: dotted;
         border-width: 5px;
-    } */
-    #search-view, #song-view, #playlist-view {
+}
+    
+    #song-view, #playlist-view {
         width: 800px;
         display: inline-block;
         border-color: blue;
         border-style: dotted;
         border-width: 5px;
+        display: none;
     }
     #head0{
         margin-bottom: 5px;
