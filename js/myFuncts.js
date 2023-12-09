@@ -82,7 +82,7 @@ function songsDisplayed(song) {
     theList.appendChild(p4);
     const p5 = document.createElement("p");
 
-    p5.textContent = "Duration: " + timeConvert(song.durationInSec) + " Minutes"
+    p5.textContent = "Duration: " + timeConvert(song.durationInSec) + " Minutes "
         + timeRemainder(song.durationInSec) + " Seconds";
     //convert total time to minutes and seconds
     theList.appendChild(p5);
