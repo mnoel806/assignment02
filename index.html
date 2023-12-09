@@ -1,430 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mattington's Marvelous Adventure!!!</title>
-    <script src="./js/myFuncts.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mattington's Marvelous Adventure!!!</title>
+<link rel="stylesheet" href="./styleA.css">
+<script src="./js/myFuncts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <!-- leave what is repeatable for now -->
 <body>
+<!-- <button onclick="showHide()">This button used to swap views</button> -->
 <div id="counter">1</div>
-<button onclick="showHide()">12345</button>
+
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // const url_songs = "https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php";
-        const url_songs = "starting-files/sample-songs.json";
-        const artistURL = "starting-files/artists.json"
+        //load Artists
+        const artistURL = "starting-files/artists.json";
         const artistSel = document.querySelector("#artistSearch");
-        const songSel = document.querySelector("#songSearch")
-        document.querySelector("#search-view").style.display = "block";
-        //adds prompts
 
-        // if (!doTheThing) {
-        //     error handling
-        // } else {//do the func};
-
-        //Now Fetching
+        //Now Fetching Artists
         fetch(artistURL)
             .then(response => response.json())
-            //or function(response){return response.json};
-            .then(data => { populateArtists(data) });
+            .then(data => { populateArtists(data) })
+        const optArt = document.createElement("option");
+        optArt.textContent = "Pick an Artist";
+        optArt.value = 0;
+        artistSel.appendChild(optArt);
 
-        const opt1 = document.createElement("option");
-        opt1.textContent = "Pick an Artist";
-        opt1.value = 0;
-        artistSel.appendChild(opt1);
+        function populateArtists(artistData) {
+            for (let art of artistData) {
+                const optA = document.createElement("option");
+                optA.textContent = art.name;
+                optA.id = art.id;
+                optA.type = art.type;
+                artistSel.appendChild(optA);
 
-    }); //END-DOMContentLoaded
-
-    //Populate those Artists Fields
-    function populateArtists(artistData) {
-        for (let c of artistData) {
-            // let opt = makeOption(c);
-            const opt = document.createElement("option");
-            opt.textContent = c.name;
-            opt.value = c.value;
-            artistSel.appendChild(opt);
-        } //End of options being populated
-
-        artistSel.addEventListener("change", e => {
-            //loads all the songs from 'e' artists into the songSel field
-            populate.songs();
-        })
-    }
-    function populateSongs() {
-        //API QUERY STRING CONSTRUCTO-CON
-        // if (!doTheThing) {
-        //     error handling
-        // } else {//do the func};
-        const url1 = url_songs;
-        // const url2 = url_songs + "?iso =" + artistSel.value;
-        fetch(url1)
-            .then(response => response.json())
-            .then(songData => { populateSongSel(songData) })
-        //add error handling try/catch bits 
-    }
-    function populateSongSel(songData) {
-        for (let c of songData) {
-            //make options
-            let x = makeOption(c);
-            songSel.appendChild(x);
+            }
         }
-    };
-    function makeOption(c) {
-        const opt = document.createElement("option");
-        opt.textContent = c.name;
-        opt.value = c.value;
-        return opt;
-    }
+        artistSel.onclick = function (e) {
+            if (e.target.tagName.toLowerCase() === 'option') {
+                loadSongs();
+            }
+        }
+    });
+        function loadSongs() {
+            const songURL = "starting-files/sample-songs.json";
+            const songSel = document.querySelector("#songSearch")
 
-    function eleMaker() {
-        const tr1 = document.createElement("<tr>");
-        const td1 = document.createElement("td");
-        const td2 = document.createElement("td");
-        const td3 = document.createElement("td");
-        const td4 = document.createElement("td");
-    }
+            fetch(songURL)
+                .then(response => response.json())
+                .then(data => { populateSongs(data) })
+            const opt1 = document.createElement("option");
+            opt1.textContent = "Pick a Song";
+            opt1.value = 0;
+            songSel.appendChild(opt1);
+
+            function populateSongs(songData) {
+                for (let s of songData) {
+                    const optS = document.createElement("option");
+                    optS.textContent = s.title;
+                    optS.songID = s.song_id;
+                    optS.title = s.title;
+                    optS.year = s.year;
+                    optS.artistID = s.artist.id;
+                    optS.artist = s.artist.name;
+                    optS.genreID = s.genre.id;
+                    optS.genre = s.genre.name;
+                    optS.durationInSec = s.details.duration;
+                    optS.bpm = s.details.bpm;
+                    optS.popul = s.details.popularity;
+                    optS.loudness = s.details.loudness;
+                    optS.energy = s.analytics.energy;
+                    optS.danceability = s.analytics.danceability;
+                    optS.liveness = s.analytics.liveness;
+                    optS.valence = s.analytics.valence;
+                    optS.acousticness = s.analytics.acousticness;
+                    optS.speechiness = s.analytics.speechiness;
+                    songSel.appendChild(optS);
+                }
+            }
+            songSel.onclick = function (e) {
+                if (e.target.tagName.toLowerCase() === 'option') {
+                    console.log(e.target.title + ' clicked');
+
+                    // loadResults(e.target);
+                    //pass in the song-object for the browse/search
+                    songsDisplayed(e.target);
+                    //takes you to selected song info
+                    const charti = document.querySelector("#right3");
+                    charti.style.display = "block";
+                    // const searchi = document.querySelector("#left1");
+                    // searchi.style.display = "none";
+                    makeChart(e.target);
+                }
+            }
+        }
+
 
     function showHide() {
         let x = document.querySelector("#search-view");
         let y = document.querySelector("#song-view");
         let z = document.querySelector("#playlist-view");
-        // if ('class.displayer' > div === "search-view") {
-        //     class.displayer = "#song-view";
-        // }
-        // else if ('class.displayer' > div === "#song-view") {
-        //     class.displayer = "#playlist-view";
-        // }
-        // else ('class.displayer' > div === "#playlist-view") {
-        //     class.displayer = "#search-view";
-        // }
+
     }
-        // if (x.style.display === "none") {
-        //     x.style.display = "block";
-        // } else {
-        //     x.style.display = "none";
-        // }
-
-
-
 </script>
 
 <div class="displayer" id="search-view"> <!-- SongSearchView -->
-        <header id="head0">
-            <h1>$Header</h1>
-            
-            <button>.onClick(GoToPlaylist)</button>
-            <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
-        </header>
+<header id="head0">
+    <h1>$Header</h1>
 
-        <!-- These sections will be replaced as the user does the navigating -->
-        <section id="left1">
-            <h1>Basic Search</h1>
-            <form id="search-form" action="">
-                <p>Search type:</p>
-                <input type="radio" name="search-options" id="search-title">
-                <label for="search-title">Song Title ${all.the.titles}(Dropdown)</label><br>
-                <input type="radio" name="search-options" id="search-artist">
-                <label for="search-options">Artist Name ${all.the.artists}</label><br>
-                <input type="radio" name="search-options" id="search-genre">
-                <label for="search-options">Genre ${all.the.genres}</label><br>
-                <br>
-                <input type="submit" value="Submit">
-                <input type="reset" value="Clear">
-                </form>
+<button id="playlistBTN">.onClick(GoToPlaylist())</button>
+<button id="repoBtn" onClick="goToRepo()"> :onClick(goToRepo()) + :mouseover(CREDITS())</button>
+</header>
 
-                <div id="searcher">
-                    <select name="artistSearch" id="artistSearch" textContext="Pick"></select>
-                    <select name="songSearch" id="songSearch"></select>
-                </div>
-        </section>
-        <!-- this will be in that searchform once it's functional -->
+<!-- These sections will be replaced as the user does the navigating -->
+<section id="left1">
+    <h1>Basic Search</h1>
+<!-- <form id="search-form" action="">
+<p>Search type:</p>
+<input type="radio" name="search-options" id="search-title">
+<label for="search-title">Song Title ${all.the.titles}(Dropdown)</label><br>
+<input type="radio" name="search-options" id="search-artist">
+<label for="search-options">Artist Name ${all.the.artists}</label><br>
+<input type="radio" name="search-options" id="search-genre">
+<label for="search-options">Genre ${all.the.genres}</label><br>
+<br>
+<input type="submit" value="Submit">
+<input type="reset" value="Clear">
+</form> -->
+
+<div id="searcher">
+    <select name="artistSearch" id="artistSearch" textContext="Pick"></select>
+    <select name="songSearch" id="songSearch"></select>
+</div>
+</section>
+<!-- this will be in that searchform once it's functional -->
 
 
-            <section id="centre2">
-                <h1>Browse/Search Results</h1>
-                
-        <table>
-            <tr>
-                <th>Title
-                    
-                </th>
-                <th>Artist</th>
-                <th>Year</th>
-                <th>Genre</th>
-                <th>Popularity</th>
-                <th>Button</th>
-            </tr>
-            <!-- populateTable() -->
-            <tr>
-                <td>a</td>
-                <td>b</td>
-                <td>c</td>
-                <td>d</td>
-                <td>e</td>
-                <td>
-                    <div>button</div>
-                    <!-- <div id="sortButtons">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button id="sortASC" onClick="sortResultsAsc()">ASC</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
-                </td>
-            </tr>
-        </table>
+<!-- <section id="centre2">
+<h1>Browse/Search Results</h1>
 
-            </section>
-        <footer>
-            <h2>FOOTER</h2>
-        </footer>
+<table id="resultsDisplay">
+    <tr>
+<th>Title</th>
+<th>Artist</th>
+<th>Year</th>
+<th>Genre</th>
+<th>Popularity</th>
+<th>Button</th>
+</tr>
+</table>
+
+</section> -->
+
+<section id="centre2">
+    <h2>Song Information</h2>
+    <div id="songInfos"></div>
+
+    <h2>Analysis of Data</h2>
+    <ul id="analysisData"></ul>
+</section>
+<section style="display:none" id="right3">
+
+    <div style="display:block">
+        <canvas id="myChart"> Chart: Exists but doesn't response to anything, yet</canvas>
     </div>
-
-    <div class="displayer" id="song-view"> <!-- SingleSongView -->
-        <header id="head0">
-            <h1>$SingleSongView</h1>
-            <button>.onClick(GoToPlaylist)</button>
-            <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
-            <button>.onlick(ToGoSearchBrowse) CLOSE</button>
-        </header>
-
-
-        <section id="left1">
-            <h2>Song Information</h2>
-            <!-- How to get this from the user. ex, use thier selection to load this -->
-            <p>$song.title, $song.artist, $song.artist_type, $song.genre, $song.duration(in mins+secs)</p>
-
-            <ul>
-                <!-- (THIS IS WHERE WE WILL ADD JSON/API INFO ONCE WE GOT IT) -->
-                <h2>Analysis Data</h2>
-                <li>$song.bpm</li>
-                <li>$song.energy</li>
-                <li>$song.dancey</li>
-                <li>$song.valence</li>
-                <li>$song.acousticness</li>
-                <li>$song.speechiness</li>
-                <li>$song.popularity</li>
-                </ul>
-
-
-
-        </section>
-
-        <section id="centre2">
-
-            <div style="display: none;">
-                <canvas id="myChart"> Chart: Exists but doesn't response to anything, yet</canvas>
-            </div>
-            <!-- Chart Base from: (https://www.chartjs.org)-->
-            <div id="theChartBox">
-                    <div>
-                        <!-- <canvas id="myChart"></canvas> MOVED-->
-                        </div>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    
-                    <script>
-                        const ctx = document.querySelector("#myChart");
-
-                                new Chart(ctx, {
-                                    type: 'radar',
-                                    data: {
-                                        labels: [
-                                            'BPM',
-                                            'Energy',
-                                            'Danciness',
-                                            'Valance',
-                                            'Acousticness',
-                                            'Speechiness',
-                                            'Popularity'
-                                        ],
-                                        // (THIS IS WHERE WE WILL ADD THE JSON/API INFO ONCE WE GOT IT)
-                                        datasets: [{
-                                            label: '# OF DATA POINTS',
-                                            data: [82, 59, 84, 41, 56, 52, 70],
-                                            // data: [$song.bpm, $song.energy, $song.danceiness, $song.valance, 
-                                            // $song.acousticness, $song.speechiness, $song.popularity],
-                                            borderWidth: 1
-                                        }]
-
-                                },
-                                options: {
-
-                                    elements: {
-                                        line: {
-                                            borderWidth: 3
-                                        }
-                                    },
-                                    scales: {
-                                        r: {
-                                            angleLines: {
-                                                display: false
-                                            },
-                                            suggestedMin: 20,
-                                            suggestedMax: 100
-                                        }
-                                    }
-                                },
-                            });
-                                </script>
-                            </div>
-                            </section>
-
-        <footer>
-            <h2>FOOTER</h2>
-        </footer>
-    </div>
-
-    <div class="displayer" id="playlist-view"> <!-- PlaylistView -->
-        <header id="head0">
-            <h1>$PlaylistView</h1>
-            <!-- <button>.onClick(GoToPlaylist)</button> -->
-            <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
-            <button>.onlick(ToGoSearchBrowse) CLOSE</button>
-        </header>
-
-    <section id="left1">
+    <!-- Chart Base from: (https://www.chartjs.org) -->
+    <div id="theChartBox1">
         <div>
-            <h1>Playlist Details</h1>
-            <p>${#ofsongsinlist}</p>
-            <p>${popularityrankings?}</p>
+            <canvas id="myChart"></canvas>
         </div>
 
-    <table>
-        <tr>
-            <th>Title
-                <!-- <div id="sortButtons">
-                            <button id="sortASC" onClick="sortResultsAsc()">ASC</button>
-                            <button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
-                        </div> -->
-            </th>
-            <th>Artist</th>
-            <th>Year</th>
-            <th>Genre</th>
-            <th>Popularity</th>
-            <th>""</th>
-        </tr>
-        <!-- forEachEntryinPlaylist -->
-        <!-- createElement("<tr>");
-                createElement("<td><a href="goToSongPage($t)">")
-                        createElement("</a></td>")
-                createElement("<td>a")
-                    createElement("</a></td>") -->
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td><button>RMV</button></td>
-        </tr>
-        <!-- Endof"Loop" -->
-        </table>
-
-    </section>
-
-    <section id="centre2">
 
 
 
+    </div>
+</section>
+</div>
 
-    </section>
+<div class="displayer" id="song-view"> <!-- SingleSongView -->
+    <header id="head0">
+        <h1>$SingleSongView</h1>
+        <button>.onClick(GoToPlaylist)</button>
+        <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
+        <button>.onlick(ToGoSearchBrowse) CLOSE</button>
+    </header>
 
-    <footer>
-        <h2>FOOTER</h2>
-    </footer>
+
+<section id="left1">
+    <h2>Song Information</h2>
+    <!-- How to get this from the user. ex, use thier selection to load this -->
+    <p>$song.title, $song.artist, $song.artist_type, $song.genre, $song.duration(in mins+secs)</p>
+
+<ul>
+    <!-- (THIS IS WHERE WE WILL ADD JSON/API INFO ONCE WE GOT IT) -->
+    <h2>Analysis Data</h2>
+    </ul>
+
+
+
+</section>
+
+<section id="centre2">
+
+<div style="display: block" ;>
+    s <canvas id="myChart"> Chart: Exists but doesn't response to anything, yet</canvas>
+</div>
+<!-- Chart Base from: (https://www.chartjs.org) -->
+<!-- <div id="theChartBox">
+<div>
+<canvas id="myChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx2 = document.querySelector("#myChart");
+
+new Chart(ctx2, {
+type: 'radar',
+data: {
+labels: [
+'BPM',
+'Energy',
+'Danciness',
+'Valance',
+'Acousticness',
+'Speechiness',
+'Popularity'
+],
+// (THIS IS WHERE WE WILL ADD THE JSON/API INFO ONCE WE GOT IT)
+datasets: [{
+label: '# OF DATA POINTS',
+data: [82, 59, 84, 41, 56, 52, 70],
+// data: [$song.bpm, $song.energy, $song.danceiness, $song.valance,
+// $song.acousticness, $song.speechiness, $song.popularity],
+borderWidth: 1
+}]
+
+},
+options: {
+
+elements: {
+line: {
+borderWidth: 3
+}
+},
+scales: {
+r: {
+angleLines: {
+display: false
+},
+suggestedMin: 20,
+suggestedMax: 100
+}
+}
+},
+});
+</script>
+</div> -->
+</section>
+
+</div>
+
+<div class="displayer" id="playlist-view"> <!-- PlaylistView -->
+    <header id="head0">
+        <h1>$PlaylistView</h1>
+        <!-- <button>.onClick(GoToPlaylist)</button> -->
+        <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
+        <button>.onlick(ToGoSearchBrowse) CLOSE</button>
+    </header>
+
+<section id="left1">
+    <div>
+        <h1>Playlist Details</h1>
+        <p>${#ofsongsinlist}</p>
+        <p>${popularityrankings?}</p>
     </div>
 
+<table>
+    <tr>
+        <th>Title
+            <!-- <div id="sortButtons">
+<button id="sortASC" onClick="sortResultsAsc()">ASC</button>
+<button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
+</div> -->
+        </th>
+        <th>Artist</th>
+        <th>Year</th>
+        <th>Genre</th>
+        <th>Popularity</th>
+        <th>""</th>
+    </tr>
+    <!-- forEachEntryinPlaylist -->
+    <!-- createElement("<tr>");
+createElement("<td><a href="goToSongPage($t)">")
+createElement("</a></td>")
+createElement("<td>a")
+createElement("</a></td>") -->
+    <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td><button>RMV</button></td>
+    </tr>
+    <!-- Endof"Loop" -->
+</table>
+
+</section>
+
+<section id="centre2">
+
+</section>
+</div>
+
+<footer>
+    <h2>FOOTER</h2>
+</footer>
 </body>
 <!-- Putting Scripts Here -->
-<script>
-        // dropcode here
-        // function dropFunction() {
-        //     document.querySelector("#dropdownmenu");
-        // }
-        // // sortAsc
-        // function sortResultsAsc() {
-        //     document.querySelector("");
-        //     //hidemybutton();
-        // }
-        // // sortDsc
-        // //Shows up only if sortAsc is alread selected
-        // function sortResultsDsc() {
-        //     document.querySelector("");
-        // }
-        // //this funct will hide the clicked button and reveal the opposite
-        // function hideMyButton() {
-        //     let x = document.querySelector("#sortDSC");
-        //     if (x.style.display === "none") {
-        //         x.style.display = "block";
-        //     } else {
-        //         x.style.display = "none";
-        //     }
-        // }
 
-
-</script>
 <!-- Putting Styles Here -->
-<style>
-    
-#search-view {
-    display: block;
-    width: 800px;
-        display: inline-block;
-        border-color: blue;
-        border-style: dotted;
-        border-width: 5px;
-}
-    
-    #song-view, #playlist-view {
-        width: 800px;
-        display: inline-block;
-        border-color: blue;
-        border-style: dotted;
-        border-width: 5px;
-        display: none;
-    }
-    #head0{
-        margin-bottom: 5px;
-        position: relative;
-        overflow: hidden;
-        border: 3px;
-        background-color: aquamarine;
-    }
-    #head0>button {
-        float: right;
-        height: 30px;
-    }
-    /* section {
-        border-width: 1px;
-        border-style: dashed;
-    } */
-    #left1 {
-        width: 300px;
-        height: 320px;
-        display: inline-block;
-        margin-right: 6px;
-        border-color: crimson;
-        border-style: dotted;
-        border-width: 5px;
-    }
-    #centre2 {
-        width: 300px;
-        height: 320px;
-        display: inline-block;
-        margin-right: 6px;
-        border-color: crimson;
-        border-style: dotted;
-        border-width: 5px;
-    }
-    footer {
-        display: block;
-        height: 100px;
-        width: 100%;
-        border: 5px;
-        border-color: darkorange;
-    }
-    
-</style>
 
 </html>

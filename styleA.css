@@ -1,0 +1,75 @@
+#search-view {
+    display: block;
+    width: 98%;
+    display: inline-block;
+    border-color: blue;
+    border-style: dotted;
+    border-width: 5px;
+}
+
+#song-view,
+#playlist-view {
+    width: 98%;
+    display: inline-block;
+    border-color: blue;
+    border-style: dotted;
+    border-width: 5px;
+    display: none;
+}
+
+#head0 {
+    margin-bottom: 5px;
+    position: relative;
+    overflow: hidden;
+    border: 5px;
+    border-style: dotted;
+    border-color: black;
+    background-color: aquamarine;
+}
+
+#head0 > button {
+    float: right;
+    height: 30px;
+}
+
+#left1 {
+    width: 30%;
+    height: 90%;
+    float: inline-start;
+    /* display: inline-block; */
+    margin-right: 6px;
+    border-color: crimson;
+    border-style: dotted;
+    border-width: 5px;
+}
+
+#centre2 {
+    width: 30%;
+    height: 90%;
+    float: left;
+    margin-right: 6px;
+    border-color: crimson;
+    border-style: dotted;
+    border-width: 5px;
+}
+
+#right3 {
+    width: 30%;
+    height: 50%;
+    float: inline-end;
+    margin-right: 6px;
+    border-color: crimson;
+    border-style: dotted;
+    border-width: 5px;
+}
+
+
+footer {
+    float: inline-end;
+    height: 100px;
+    width: 100%;
+    padding-top: 10px;
+    border: 5px;
+    border-style: dotted;
+    border-color: lightskyblue;
+}

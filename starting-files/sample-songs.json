@@ -132,5 +132,32 @@
 			"acousticness": 0,
 			"speechiness": 5
 		}
+	},
+	{
+		"song_id": 3333,
+		"title": "Vertigo",
+		"year": 2021,
+		"artist": {
+			"id": 999,
+			"name": "Curbi"
+		},
+		"genre": {
+			"id": 110,
+			"name": "dance pop"
+		},
+		"details": {
+			"duration": 184,
+			"bpm": 170,
+			"popularity": 92,
+			"loudness": -9
+		},
+		"analytics": {
+			"energy": 90,
+			"danceability": 98,
+			"liveness": 55,
+			"valence": 26,
+			"acousticness": 6,
+			"speechiness": 23
+		}
 	}
 ]
