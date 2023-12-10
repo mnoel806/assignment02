@@ -14,8 +14,6 @@
 <!-- Sometimes when I comment things out, a 
     linter tries to use "hidden" braces and screw with my code -->
 <body>
-<!-- <button onclick="showHide()">This button used to swap views</button> -->
-<div id="counter">1</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -23,7 +21,8 @@
 
         const artistURL = "starting-files/artists.json";
         const artistSel = document.querySelector("#artistSearch");
-
+        const songSel = document.querySelector("#songSearch")
+        // songSel.style.display = "none";
         //Now Fetching Artists
         fetch(artistURL)
             .then(response => response.json())
@@ -37,21 +36,26 @@
             for (let art of artistData) {
                 const optA = document.createElement("option");
                 optA.textContent = art.name;
+                optA.name = art.name;
                 optA.id = art.id;
                 optA.type = art.type;
                 artistSel.appendChild(optA);
 
-            }
+            }//End of options being populated
         }
         artistSel.onclick = function (e) {
             if (e.target.tagName.toLowerCase() === 'option') {
-                loadSongs();
+                console.log(e.target.name + ' clicked');
+
+                //only load the songs from the selected artist next+
+                loadArtResults(e.target);
+                songsDisplayed(e.target);
             }
         }
     });
         function loadSongs() {
             const api = 'http://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
-            const songURL = "starting-files/sample-songs.json";
+            // const songURL = "starting-files/sample-songs.json";
             const songSel = document.querySelector("#songSearch")
 
             fetch(api)
@@ -91,31 +95,18 @@
                     console.log(e.target.title + ' clicked');
 
                     loadResults(e.target);
+
                     //pass in the song-object for the browse/search
                     songsDisplayed(e.target);
                     //takes you to selected song info
                     const charti = document.querySelector("#right3");
                     charti.style.display = "block";
-                    // const searchi = document.querySelector("#left1");
-                    // searchi.style.display = "none";
+
                     makeChart(e.target);
                 }
             }
         }
 
-
-    function showHide() {
-        let x = document.querySelector("#search-view");
-        let y = document.querySelector("#song-view");
-        let z = document.querySelector("#playlist-view");
-//Should flip between views
-//well, it had worked but I borked it up something fierce
-    }
-
-
-    let x = document.querySelector("#search-view");
-    let y = document.querySelector("#song-view");
-    let z = document.querySelector("#playlist-view");
 </script>
 
 <div class="displayer" id="search-view"> <!-- SongSearchView -->
@@ -123,9 +114,9 @@
         <h1>Songs n Stuff</h1>
         <!-- Title to be dynamic later -->
     <!-- <button id="playlistBTN">.onClick(GoToPlaylist())</button> -->
-    <button id="repoBtn" onClick="goToRepo()"> :onClick(goToRepo()) + :mouseover(CREDITS())</button>
+    <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
     <button id="reloader" onClick="location.reload()">RELOAD</button>
-    <button id="showSearch" onClick="showSearchView()">showSearch</button>
+    <!-- <button id="showSearch" onClick="showSearchView()">showSearch</button> -->
     <button id="showSong" onClick="showSongView()">showSong</button>
     <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button>
     </header>
@@ -178,7 +169,7 @@
 <div class="displayer" id="song-view"> <!-- SingleSongView -->
     <header id="head0">
         <h1>$SingleSongView</h1>
-        <button id="repoBtn" onClick="goToRepo()"> :onClick(goToRepo()) + :mouseover(CREDITS())</button>
+        <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
         <button id="reloader" onClick="location.reload()">RELOAD</button>
         <button id="showSearch" onClick="showSearchView()">showSearch</button>
         <!-- <button id="showSong" onClick="showSongView()">showSong</button> -->
@@ -212,7 +203,7 @@
 <div class="displayer" id="playlist-view"> <!-- PlaylistView -->
     <header id="head0">
         <h1>$PlaylistView</h1>
-        <button id="repoBtn" onClick="goToRepo()"> :onClick(goToRepo()) + :mouseover(CREDITS())</button>
+        <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
         <button id="reloader" onClick="location.reload()">RELOAD</button>
         <button id="showSearch" onClick="showSearchView()">showSearch</button>
         <button id="showSong" onClick="showSongView()">showSong</button>

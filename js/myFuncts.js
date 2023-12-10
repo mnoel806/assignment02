@@ -173,52 +173,14 @@ function makeChart(song) {
 }
 
 function goToRepo() {
-    const repoURL = "https://github.com/mnoel806/assignment02";
+    window.location = "https://github.com/mnoel806/assignment02";
 }
 function showCredits() {
     //onMouseOver:Floating Window at mouse with credits
 }
 
-// function populateArtists(artistData) {
-//     for (let c of artistData) {
-//         // let opt = makeOption(c);
-//         const opt = document.createElement("option");
-//         opt.textContent = c.name;
-//         opt.value = c.value;
-//             opt.addEventListener("click", function(){
-//             this.classList.add("selected");
-//             });
-//         artistSel.appendChild(opt);
-//     } //End of options being populated
 
-// }
-//Populate those Artists Fields
-//     function populateArtists(artistData) {
-//     for (let c of artistData) {
-//         const opt = document.createElement("option");
-//         opt.textContent = c.name;
-//         opt.value = c.value;
-//         artistSel.appendChild(opt);
-//     } //End of options being populated
 
-// }
-
-// fetch(songURL)
-//     .then(response => response.json())
-//     .then(data => { populateSongs(data) })
-// const opt1 = document.createElement("option");
-// opt1.textContent = "Pick a Song";
-// opt1.value = 0;
-// songSel.appendChild(opt1);
-
-// function populateSongs(songData) {
-//     for (let s of songData) {
-//         const optS = document.createElement("option");
-//         optS.textContent = s.title;
-//         optS.value = s.title;
-//         songSel.appendChild(optS);
-//     }
-// }
 
 
 
@@ -241,6 +203,31 @@ function loadResults(song) {
     tr1.appendChild(td4);
     const td5 = document.createElement("td");
     td5.textContent = song.popul;
+    tr1.appendChild(td5);
+    const td6 = document.createElement("btn");
+    td6.textContent = "ADD";
+    tr1.appendChild(td6);
+    theList.appendChild(tr1);
+}
+function loadArtResults(artist) {
+    const theList = document.querySelector("#resultsDisplay");
+    const tr1 = document.createElement("tr");
+    const td1 = document.createElement("td");
+    td1.textContent = artist.title;
+    loadSongs();
+    // alert(song.title);
+    tr1.appendChild(td1);
+    const td2 = document.createElement("td");
+    td2.textContent = artist.name;
+    tr1.appendChild(td2);
+    const td3 = document.createElement("td");
+    td3.textContent = artist.year;
+    tr1.appendChild(td3);
+    const td4 = document.createElement("td");
+    td4.textContent = artist.genre;
+    tr1.appendChild(td4);
+    const td5 = document.createElement("td");
+    td5.textContent = artist.popul;
     tr1.appendChild(td5);
     const td6 = document.createElement("btn");
     td6.textContent = "ADD";
