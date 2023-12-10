@@ -1,25 +1,33 @@
-function dropFunction() {
-    document.querySelector("#dropdownmenu");
+function showSearchView() {
+    const view1 = document.querySelector("#search-view");
+    const view2 = document.querySelector("#song-view");
+    const view3 = document.querySelector("#playlist-view");
+
+    view1.style.display = "block";
+    view2.style.display = "none";
+    view3.style.display = "none";
 }
-// sortAsc
-function sortResultsAsc() {
-    document.querySelector("");
-    //hidemybutton();
+function showSongView() {
+    const view1 = document.querySelector("#search-view");
+    const view2 = document.querySelector("#song-view");
+    const view3 = document.querySelector("#playlist-view");
+
+    view1.style.display = "none";
+    view2.style.display = "block";
+    view3.style.display = "none";
 }
-// sortDsc
-//Shows up only if sortAsc is alread selected
-function sortResultsDsc() {
-    document.querySelector("");
+function showPlaylistView() {
+    const view1 = document.querySelector("#search-view");
+    const view2 = document.querySelector("#song-view");
+    const view3 = document.querySelector("#playlist-view");
+
+    view1.style.display = "none";
+    view2.style.display = "none";
+    view3.style.display = "block";
 }
-//this funct will hide the clicked button and reveal the opposite
-function hideMyButton() {
-    let x = document.querySelector("#sortDSC");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
+
+
+
 
 // Loading the browse results then select song
 function loadResults(song) {
@@ -215,70 +223,37 @@ function showCredits() {
 
 
 // Loading the browse results
-// function loadResults(song) {
-//     const theList = document.querySelector("#resultsDisplay");
-//     const tr1 = document.createElement("tr");
-//     const td1 = document.createElement("td");
-//     td1.textContent = song.title;
-//     // alert(song.title);
-//     tr1.appendChild(td1);
-//     const td2 = document.createElement("td");
-//     td2.textContent = song.artist;
-//     tr1.appendChild(td2);
-//     const td3 = document.createElement("td");
-//     td3.textContent = song.year;
-//     tr1.appendChild(td3);
-//     const td4 = document.createElement("td");
-//     td4.textContent = song.genre;
-//     tr1.appendChild(td4);
-//     const td5 = document.createElement("td");
-//     td5.textContent = song.popul;
-//     tr1.appendChild(td5);
-//     const td6 = document.createElement("btn");
-//     td6.textContent = "ADD";
-//     tr1.appendChild(td6);
-//     theList.appendChild(tr1);
-// }
+function loadResults(song) {
+    const theList = document.querySelector("#resultsDisplay");
+    const tr1 = document.createElement("tr");
+    const td1 = document.createElement("td");
+    td1.textContent = song.title;
+    // alert(song.title);
+    tr1.appendChild(td1);
+    const td2 = document.createElement("td");
+    td2.textContent = song.artist;
+    tr1.appendChild(td2);
+    const td3 = document.createElement("td");
+    td3.textContent = song.year;
+    tr1.appendChild(td3);
+    const td4 = document.createElement("td");
+    td4.textContent = song.genre;
+    tr1.appendChild(td4);
+    const td5 = document.createElement("td");
+    td5.textContent = song.popul;
+    tr1.appendChild(td5);
+    const td6 = document.createElement("btn");
+    td6.textContent = "ADD";
+    tr1.appendChild(td6);
+    theList.appendChild(tr1);
+}
 
-// const ctx = document.querySelector("#myChart");
 
-// new Chart(ctx, {
-//     type: 'radar',
-//     data: {
-//         labels: [
-//             'BPM',
-//             'Energy',
-//             'Danciness',
-//             'Valance',
-//             'Acousticness',
-//             'Speechiness',
-//             'Popularity'
-//         ],
-//         // (THIS IS WHERE WE WILL ADD THE JSON/API INFO ONCE WE GOT IT)
-//         datasets: [{
-//             label: '# OF DATA POINTS',
-//             data: [82, 59, 84, 41, 56, 52, 70],
-//             // data: [$song.bpm, $song.energy, $song.danceiness, $song.valance, 
-//             // $song.acousticness, $song.speechiness, $song.popularity],
-//             borderWidth: 1
-//         }]
 
-//     },
-//     options: {
+function getRandomNumber() {
+    return 4;   //chosen by fair dice roll
+    //100% random
+}
 
-//         elements: {
-//             line: {
-//                 borderWidth: 3
-//             }
-//         },
-//         scales: {
-//             r: {
-//                 angleLines: {
-//                     display: false
-//                 },
-//                 suggestedMin: 20,
-//                 suggestedMax: 100
-//             }
-//         }
-//     },
-// });
+
+{/* <button id="reloader" onClick="location.reload()">RELOAD</button> */ }

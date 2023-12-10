@@ -33,7 +33,7 @@
 }
 
 #left1 {
-    width: 30%;
+    width: 40%;
     height: 90%;
     float: inline-start;
     /* display: inline-block; */
@@ -44,7 +44,7 @@
 }
 
 #centre2 {
-    width: 30%;
+    width: 40%;
     height: 90%;
     float: left;
     margin-right: 6px;
@@ -54,7 +54,7 @@
 }
 
 #right3 {
-    width: 30%;
+    width: 40%;
     height: 50%;
     float: inline-end;
     margin-right: 6px;

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mattington's Marvelous Adventure!</title>
+<title>Mattington's Musical Adventure!</title>
 <link rel="stylesheet" href="./styleA.css">
 <script src="./js/myFuncts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -17,10 +17,10 @@
 <!-- <button onclick="showHide()">This button used to swap views</button> -->
 <div id="counter">1</div>
 
-
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         //load Artists
+
         const artistURL = "starting-files/artists.json";
         const artistSel = document.querySelector("#artistSearch");
 
@@ -50,10 +50,11 @@
         }
     });
         function loadSongs() {
+            const api = 'http://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
             const songURL = "starting-files/sample-songs.json";
             const songSel = document.querySelector("#songSearch")
 
-            fetch(songURL)
+            fetch(api)
                 .then(response => response.json())
                 .then(data => { populateSongs(data) })
             const opt1 = document.createElement("option");
@@ -89,7 +90,7 @@
                 if (e.target.tagName.toLowerCase() === 'option') {
                     console.log(e.target.title + ' clicked');
 
-                    // loadResults(e.target);
+                    loadResults(e.target);
                     //pass in the song-object for the browse/search
                     songsDisplayed(e.target);
                     //takes you to selected song info
@@ -110,15 +111,24 @@
 //Should flip between views
 //well, it had worked but I borked it up something fierce
     }
+
+
+    let x = document.querySelector("#search-view");
+    let y = document.querySelector("#song-view");
+    let z = document.querySelector("#playlist-view");
 </script>
 
 <div class="displayer" id="search-view"> <!-- SongSearchView -->
-<header id="head0">
-    <h1>Songs n Stuff</h1>
-    <!-- Title to be dynamic later -->
-<button id="playlistBTN">.onClick(GoToPlaylist())</button>
-<button id="repoBtn" onClick="goToRepo()"> :onClick(goToRepo()) + :mouseover(CREDITS())</button>
-</header>
+    <header id="head0">
+        <h1>Songs n Stuff</h1>
+        <!-- Title to be dynamic later -->
+    <!-- <button id="playlistBTN">.onClick(GoToPlaylist())</button> -->
+    <button id="repoBtn" onClick="goToRepo()"> :onClick(goToRepo()) + :mouseover(CREDITS())</button>
+    <button id="reloader" onClick="location.reload()">RELOAD</button>
+    <button id="showSearch" onClick="showSearchView()">showSearch</button>
+    <button id="showSong" onClick="showSongView()">showSong</button>
+    <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button>
+    </header>
 
 <!-- These sections will be replaced as the user does the navigating -->
 <section id="left1">
@@ -136,145 +146,77 @@
 <input type="reset" value="Clear">
 </form> -->
 
-<div id="searcher">
-    <select name="artistSearch" id="artistSearch" textContext="Pick"></select>
-    <select name="songSearch" id="songSearch"></select>
-</div>
+    <div id="searcher">
+        <select name="artistSearch" id="artistSearch" textContext="Pick me"></select>
+        <select name="songSearch" id="songSearch"></select>
+        <!-- <select name="genreSearch" id="genreSearch"></select> -->
+    </div>
 </section>
 <!-- this will be for that searchform once it's fully functional -->
 
 
-<!-- <section id="centre2">
+<section id="centre2">
 <h1>Browse/Search Results</h1>
 
 <table id="resultsDisplay">
-    <tr>
-<th>Title</th>
-<th>Artist</th>
-<th>Year</th>
-<th>Genre</th>
-<th>Popularity</th>
-<th>Button</th>
-</tr>
+        <tr>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Year</th>
+            <th>Genre</th>
+            <th>Popularity</th>
+            <th>Button</th>
+        </tr>
 </table>
 
-</section> -->
-
-<section id="centre2">
-    <h2>Song Information</h2>
-    <div id="songInfos"></div>
-
-    <h2>Analysis of Data</h2>
-    <ul id="analysisData"></ul>
 </section>
-<section style="display:none" id="right3">
-
-    <div style="display:block">
-        <canvas id="myChart"> Chart: Exists but doesn't response to anything, yet</canvas>
-    </div>
-    <!-- Chart Base from: (https://www.chartjs.org) -->
-    <div id="theChartBox1">
-        <div>
-            <canvas id="myChart"></canvas>
-        </div>
 
 
 
-
-    </div>
-</section>
 </div>
 
 <div class="displayer" id="song-view"> <!-- SingleSongView -->
     <header id="head0">
         <h1>$SingleSongView</h1>
-        <button>.onClick(GoToPlaylist)</button>
-        <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
-        <button>.onlick(ToGoSearchBrowse) CLOSE</button>
-    </header>
-
-
-<section id="left1">
-    <h2>Song Information</h2>
-    <!-- How to get this from the user. ex, use thier selection to load this -->
-    <p>$song.title, $song.artist, $song.artist_type, $song.genre, $song.duration(in mins+secs)</p>
-
-<ul>
-    <!-- (THIS IS WHERE WE WILL ADD JSON/API INFO ONCE WE GOT IT) -->
-    <h2>Analysis Data</h2>
-    </ul>
+        <button id="repoBtn" onClick="goToRepo()"> :onClick(goToRepo()) + :mouseover(CREDITS())</button>
+        <button id="reloader" onClick="location.reload()">RELOAD</button>
+        <button id="showSearch" onClick="showSearchView()">showSearch</button>
+        <!-- <button id="showSong" onClick="showSongView()">showSong</button> -->
+        <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button>
+        </header>
+    <section id="left1">
+        <h2>Song Information</h2>
+        <div id="songInfos"></div>
+        <h2>Analysis of Data</h2>
+        <ul id="analysisData"></ul>
+        </section>
 
 
 
-</section>
+        <section style="display:none" id="right3">
 
-<section id="centre2">
-
-<div style="display: block" ;>
-    s <canvas id="myChart"> Chart: Exists but doesn't response to anything, yet</canvas>
-</div>
-<!-- Chart Base from: (https://www.chartjs.org) -->
-<!-- <div id="theChartBox">
-<div>
-<canvas id="myChart"></canvas>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-const ctx2 = document.querySelector("#myChart");
-
-new Chart(ctx2, {
-type: 'radar',
-data: {
-labels: [
-'BPM',
-'Energy',
-'Danciness',
-'Valance',
-'Acousticness',
-'Speechiness',
-'Popularity'
-],
-// (THIS IS WHERE WE WILL ADD THE JSON/API INFO ONCE WE GOT IT)
-datasets: [{
-label: '# OF DATA POINTS',
-data: [82, 59, 84, 41, 56, 52, 70],
-// data: [$song.bpm, $song.energy, $song.danceiness, $song.valance,
-// $song.acousticness, $song.speechiness, $song.popularity],
-borderWidth: 1
-}]
-
-},
-options: {
-
-elements: {
-line: {
-borderWidth: 3
-}
-},
-scales: {
-r: {
-angleLines: {
-display: false
-},
-suggestedMin: 20,
-suggestedMax: 100
-}
-}
-},
-});
-</script>
-</div> -->
-</section>
+            <div style="display:block">
+                <canvas id="myChart"></canvas>
+            </div>
+            <!-- Chart Base from: (https://www.chartjs.org) -->
+            <div id="theChartBox1">
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+        
+            </div>
+            </section>
 
 </div>
 
 <div class="displayer" id="playlist-view"> <!-- PlaylistView -->
     <header id="head0">
         <h1>$PlaylistView</h1>
-        <!-- <button>.onClick(GoToPlaylist)</button> -->
-        <button>.onClick(GoToRepo) + :mouseover(CREDITS!)</button>
-        <button>.onlick(ToGoSearchBrowse) CLOSE</button>
+        <button id="repoBtn" onClick="goToRepo()"> :onClick(goToRepo()) + :mouseover(CREDITS())</button>
+        <button id="reloader" onClick="location.reload()">RELOAD</button>
+        <button id="showSearch" onClick="showSearchView()">showSearch</button>
+        <button id="showSong" onClick="showSongView()">showSong</button>
+        <!-- <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button> -->
     </header>
 
 <section id="left1">
@@ -284,7 +226,7 @@ suggestedMax: 100
         <p>${popularityrankings?}</p>
     </div>
 
-<table>
+<table id="playlistTable">
     <tr>
         <th>Title
             <!-- <div id="sortButtons">
@@ -316,6 +258,7 @@ createElement("</a></td>") -->
 </table>
 
 </section>
+
 
 <section id="centre2">
 
