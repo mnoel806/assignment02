@@ -38,6 +38,9 @@
                 optA.name = art.name;
                 optA.id = art.id;
                 optA.type = art.type;
+                optA.addEventListener("click", function () {
+                    this.classList.add("selected");
+                });
                 artistSel.appendChild(optA);
 
             }//End of options being populated
@@ -88,10 +91,13 @@
                     optS.valence = s.analytics.valence;
                     optS.acousticness = s.analytics.acousticness;
                     optS.speechiness = s.analytics.speechiness;
+                    optS.addEventListener("click", function () {
+                        this.classList.add("selected");
+                    });
                     songSel.appendChild(optS);
                 }
             }
-            songSel.onClick = function (e) {
+            songSel.onclick = function (e) {
                 if (e.target.tagName.toLowerCase() === 'option') {
                     console.log(e.target.title + ' clicked');
 
@@ -125,7 +131,6 @@
 <!-- These sections will be replaced as the user does the navigating -->
 <section id="left1">
     <h1>Basic Search</h1>
-    <p></p>
 <!-- <form id="search-form" action="">
 <p>Search type:</p>
 <input type="radio" name="search-options" id="search-title">
@@ -139,7 +144,7 @@
 <input type="reset" value="Clear">
 </form> -->
 <button id="btnswp01" onClick="artSongSwap(), loadSongs()">Search By Song</button>
-<button id="btnswp02" onClick="artSongSwap()">Search By Artist</button>
+<button id="btnswp02" onClick="artSongSwap()">Search By Artist</button> <br>
     <div id="searcher">
         <select name="artistSearch" id="artistSearch" textContext="Pick me"></select>
         <select name="songSearch" id="songSearch"></select>
