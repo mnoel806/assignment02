@@ -22,6 +22,7 @@
         const artistURL = "starting-files/artists.json";
         const artistSel = document.querySelector("#artistSearch");
         const songSel = document.querySelector("#songSearch")
+        loadSongs();
         // songSel.style.display = "none";
         //Now Fetching Artists
         fetch(artistURL)
@@ -42,6 +43,7 @@
                 artistSel.appendChild(optA);
 
             }//End of options being populated
+
         }
         artistSel.onclick = function (e) {
             if (e.target.tagName.toLowerCase() === 'option') {
