@@ -7,6 +7,18 @@
     border-width: 5px;
 }
 
+#btnswp01 {
+    display: block;
+}
+
+#btnswp02 {
+    display: none;
+}
+
+#songSearch {
+    display: none;
+    width: fit-content;
+}
 #song-view,
 #playlist-view {
     width: 98%;

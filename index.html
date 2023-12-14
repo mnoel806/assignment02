@@ -21,9 +21,7 @@
 
         const artistURL = "starting-files/artists.json";
         const artistSel = document.querySelector("#artistSearch");
-        const songSel = document.querySelector("#songSearch")
-        loadSongs();
-        // songSel.style.display = "none";
+
         //Now Fetching Artists
         fetch(artistURL)
             .then(response => response.json())
@@ -45,7 +43,7 @@
             }//End of options being populated
 
         }
-        artistSel.onclick = function (e) {
+        artistSel.onClick = function (e) {
             if (e.target.tagName.toLowerCase() === 'option') {
                 console.log(e.target.name + ' clicked');
 
@@ -55,11 +53,12 @@
             }
         }
     });
+
+
         function loadSongs() {
             const api = 'http://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
             // const songURL = "starting-files/sample-songs.json";
             const songSel = document.querySelector("#songSearch")
-
             fetch(api)
                 .then(response => response.json())
                 .then(data => { populateSongs(data) })
@@ -92,12 +91,11 @@
                     songSel.appendChild(optS);
                 }
             }
-            songSel.onclick = function (e) {
+            songSel.onClick = function (e) {
                 if (e.target.tagName.toLowerCase() === 'option') {
                     console.log(e.target.title + ' clicked');
 
                     loadResults(e.target);
-
                     //pass in the song-object for the browse/search
                     songsDisplayed(e.target);
                     //takes you to selected song info
@@ -108,6 +106,7 @@
                 }
             }
         }
+
 
 </script>
 
@@ -126,6 +125,7 @@
 <!-- These sections will be replaced as the user does the navigating -->
 <section id="left1">
     <h1>Basic Search</h1>
+    <p></p>
 <!-- <form id="search-form" action="">
 <p>Search type:</p>
 <input type="radio" name="search-options" id="search-title">
@@ -138,7 +138,8 @@
 <input type="submit" value="Submit">
 <input type="reset" value="Clear">
 </form> -->
-
+<button id="btnswp01" onClick="artSongSwap(), loadSongs()">Search By Song</button>
+<button id="btnswp02" onClick="artSongSwap()">Search By Artist</button>
     <div id="searcher">
         <select name="artistSearch" id="artistSearch" textContext="Pick me"></select>
         <select name="songSearch" id="songSearch"></select>
