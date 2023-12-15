@@ -54,7 +54,7 @@
                 //only load the songs from the selected artist next+
                 loadArtResults(e.target);
                 songsDisplayed(e.target);
-                loadSongs();
+                // loadSongs();
             }
         }
     });
@@ -70,9 +70,9 @@
             const opt1 = document.createElement("option");
             opt1.textContent = "Pick a Song";
             opt1.value = 0;
-            songSel.addEventListener("click", function () {
-                this.classList.add("selected");
-            });
+            // songSel.addEventListener("click", function () {
+            //     this.classList.add("selected");
+            // });
             songSel.appendChild(opt1);
 
             function populateSongs(songData) {
@@ -100,7 +100,7 @@
                     songSel.appendChild(optS);
                 }
             }
-            songSel.onclick = function (e) {
+            songSel.addEventListener('click', function (e) {
                 if (e.target.tagName.toLowerCase() === 'option') {
                     console.log(e.target.title + ' clicked');
 
@@ -113,7 +113,7 @@
 
                     makeChart(e.target);
                 }
-            }
+            })
         }
 
 
