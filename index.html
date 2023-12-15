@@ -21,7 +21,7 @@
 
         const artistURL = "starting-files/artists.json";
         const artistSel = document.querySelector("#artistSearch");
-
+        const songSel = document.querySelector("#songSearch");
         //Now Fetching Artists
         fetch(artistURL)
             .then(response => response.json())
@@ -45,8 +45,9 @@
 
             }//End of options being populated
 
+
         }
-        artistSel.onClick = function (e) {
+        artistSel.onclick = function (e) {
             if (e.target.tagName.toLowerCase() === 'option') {
                 console.log(e.target.name + ' clicked');
 
@@ -61,13 +62,16 @@
         function loadSongs() {
             const api = 'http://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
             // const songURL = "starting-files/sample-songs.json";
-            const songSel = document.querySelector("#songSearch")
+            const songSel = document.querySelector("#songSearch");
             fetch(api)
                 .then(response => response.json())
                 .then(data => { populateSongs(data) })
             const opt1 = document.createElement("option");
             opt1.textContent = "Pick a Song";
             opt1.value = 0;
+            songSel.addEventListener("click", function () {
+                this.classList.add("selected");
+            });
             songSel.appendChild(opt1);
 
             function populateSongs(songData) {
@@ -91,9 +95,7 @@
                     optS.valence = s.analytics.valence;
                     optS.acousticness = s.analytics.acousticness;
                     optS.speechiness = s.analytics.speechiness;
-                    optS.addEventListener("click", function () {
-                        this.classList.add("selected");
-                    });
+
                     songSel.appendChild(optS);
                 }
             }

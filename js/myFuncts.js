@@ -204,30 +204,30 @@ function showCredits() {
 
 
 // Loading the browse results
-function loadResults(song) {
-    const theList = document.querySelector("#resultsDisplay");
-    const tr1 = document.createElement("tr");
-    const td1 = document.createElement("td");
-    td1.textContent = song.title;
-    // alert(song.title);
-    tr1.appendChild(td1);
-    const td2 = document.createElement("td");
-    td2.textContent = song.artist;
-    tr1.appendChild(td2);
-    const td3 = document.createElement("td");
-    td3.textContent = song.year;
-    tr1.appendChild(td3);
-    const td4 = document.createElement("td");
-    td4.textContent = song.genre;
-    tr1.appendChild(td4);
-    const td5 = document.createElement("td");
-    td5.textContent = song.popul;
-    tr1.appendChild(td5);
-    const td6 = document.createElement("btn");
-    td6.textContent = "ADD";
-    tr1.appendChild(td6);
-    theList.appendChild(tr1);
-}
+// function loadResults(song) {
+//     const theList = document.querySelector("#resultsDisplay");
+//     const tr1 = document.createElement("tr");
+//     const td1 = document.createElement("td");
+//     td1.textContent = song.title;
+//     // alert(song.title);
+//     tr1.appendChild(td1);
+//     const td2 = document.createElement("td");
+//     td2.textContent = song.artist;
+//     tr1.appendChild(td2);
+//     const td3 = document.createElement("td");
+//     td3.textContent = song.year;
+//     tr1.appendChild(td3);
+//     const td4 = document.createElement("td");
+//     td4.textContent = song.genre;
+//     tr1.appendChild(td4);
+//     const td5 = document.createElement("td");
+//     td5.textContent = song.popul;
+//     tr1.appendChild(td5);
+//     const td6 = document.createElement("btn");
+//     td6.textContent = "ADD";
+//     tr1.appendChild(td6);
+//     theList.appendChild(tr1);
+// }
 function loadArtResults(artist) {
     const theList = document.querySelector("#resultsDisplay");
     const tr1 = document.createElement("tr");
