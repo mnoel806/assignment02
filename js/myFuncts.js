@@ -233,7 +233,6 @@ function loadArtResults(artist) {
     const tr1 = document.createElement("tr");
     const td1 = document.createElement("td");
     td1.textContent = artist.title;
-    loadSongs();
     // alert(song.title);
     tr1.appendChild(td1);
     const td2 = document.createElement("td");

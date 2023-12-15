@@ -54,6 +54,7 @@
                 //only load the songs from the selected artist next+
                 loadArtResults(e.target);
                 songsDisplayed(e.target);
+                loadSongs();
             }
         }
     });
@@ -103,7 +104,7 @@
                 if (e.target.tagName.toLowerCase() === 'option') {
                     console.log(e.target.title + ' clicked');
 
-                    loadResults(e.target);
+                    loadSongResults(e.target);
                     //pass in the song-object for the browse/search
                     songsDisplayed(e.target);
                     //takes you to selected song info
