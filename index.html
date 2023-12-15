@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mattington's Musical Adventure!</title>
+<title>Matthew's Musical Adventure!</title>
 <link rel="stylesheet" href="./styleA.css">
 <script src="./js/myFuncts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -50,7 +50,7 @@
         artistSel.onclick = function (e) {
             if (e.target.tagName.toLowerCase() === 'option') {
                 console.log(e.target.name + ' clicked');
-                // loadSongs();
+
                 //only load the songs from the selected artist next+
                 loadArtResults(e.target);
                 songsDisplayed(e.target);
@@ -60,7 +60,7 @@
         }
     });
 
-        // loadSongs();
+
         function loadSongs() {
             const api = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
             // const songURL = "starting-files/sample-songs.json";
@@ -72,9 +72,7 @@
             opt1.textContent = "Pick a Song";
             opt1.value = 0;
             const it = 0;
-            // songSel.addEventListener("click", function () {
-            //     this.classList.add("selected");
-            // });
+
             songSel.appendChild(opt1);
 
             function populateSongs(songData) {
