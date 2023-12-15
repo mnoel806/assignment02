@@ -37,6 +37,7 @@ function artSongSwap() {
         y.style.display = "block";
         var1.style.display = "none";
         var2.style.display = "block";
+        loadSongs();
     } else {
         x.style.display = "block";
         y.style.display = "none";
