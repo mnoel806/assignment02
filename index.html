@@ -38,9 +38,9 @@
                 optA.name = art.name;
                 optA.id = art.id;
                 optA.type = art.type;
-                optA.addEventListener("click", function () {
-                    this.classList.add("selected");
-                });
+                // optA.addEventListener("click", function () {
+                //     this.classList.add("selected");
+                // });
                 artistSel.appendChild(optA);
 
             }//End of options being populated
@@ -50,11 +50,14 @@
         artistSel.onclick = function (e) {
             if (e.target.tagName.toLowerCase() === 'option') {
                 console.log(e.target.name + ' clicked');
-
+                if (it > 0) {
+                    loadSongs();
+                }
                 //only load the songs from the selected artist next+
                 loadArtResults(e.target);
                 songsDisplayed(e.target);
-                // loadSongs();
+
+
             }
         }
     });
@@ -70,6 +73,7 @@
             const opt1 = document.createElement("option");
             opt1.textContent = "Pick a Song";
             opt1.value = 0;
+            const it = 0;
             // songSel.addEventListener("click", function () {
             //     this.classList.add("selected");
             // });
@@ -99,6 +103,7 @@
 
                     songSel.appendChild(optS);
                 }
+                it++;
             }
             songSel.addEventListener('click', function (e) {
                 if (e.target.tagName.toLowerCase() === 'option') {

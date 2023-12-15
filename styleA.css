@@ -1,10 +1,11 @@
+body {
+    position: relative;
+}
 #search-view {
     display: block;
-    width: 98%;
+    width: 90%;
     display: inline-block;
-    border-color: blue;
-    border-style: dotted;
-    border-width: 5px;
+background-color: beige;
 }
 
 #btnswp01 {
@@ -21,11 +22,9 @@
 }
 #song-view,
 #playlist-view {
-    width: 98%;
+    width: 90%;
     display: inline-block;
-    border-color: blue;
-    border-style: dotted;
-    border-width: 5px;
+    background-color: beige;
     display: none;
 }
 
@@ -52,7 +51,7 @@
     margin-right: 6px;
     border-color: crimson;
     border-style: dotted;
-    border-width: 5px;
+    border-width: 1px;
 }
 
 #centre2 {
@@ -62,7 +61,7 @@
     margin-right: 6px;
     border-color: crimson;
     border-style: dotted;
-    border-width: 5px;
+    border-width: 1px;
 }
 
 #right3 {
@@ -72,16 +71,14 @@
     margin-right: 6px;
     border-color: crimson;
     border-style: dotted;
-    border-width: 5px;
+    border-width: 1px;
 }
 
 
 footer {
-    float: inline-end;
+    float: inline-start;
     height: 100px;
-    width: 100%;
+    width: 90%;
     padding-top: 10px;
-    border: 5px;
-    border-style: dotted;
-    border-color: lightskyblue;
+    background-color: lightskyblue;
 }
