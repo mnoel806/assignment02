@@ -1,0 +1,138 @@
+<div class="displayer" id="search-view"> <!-- SongSearchView -->
+    <header id="head0">
+        <h1>Songs and Stuff</h1>
+        <!-- Title to be dynamic later -->
+        <!-- <button id="playlistBTN">.onClick(GoToPlaylist())</button> -->
+        <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
+        <button id="reloader" onClick="location.reload()">RELOAD</button>
+        <!-- <button id="showSearch" onClick="showSearchView()">showSearch</button> -->
+        <button id="showSong" onClick="showSongView()">showSong</button>
+        <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button>
+    </header>
+
+    <!-- These sections will be replaced as the user does the navigating -->
+    <section id="left1">
+        <h1>Basic Search</h1>
+
+
+        <div id="searcher">
+            <select name="artistSearch" id="artistSearch" textContext="Pick me"></select>
+            <select name="songSearch" id="songSearch"></select>
+            <select name="songSearchByArt" id="songSearchByArt">"Pick me"</select>
+            <!-- <select name="genreSearch" id="genreSearch"></select> -->
+        </div>
+        <br>
+        <button id="btnswp01" onClick="artSongSwap()">Click to Search By Song</button>
+        <button id="btnswp02" onClick="artSongSwap()">Click to Search By Artist</button>
+    </section>
+
+
+    <section id="centre2">
+        <h1>Browse/Search Results</h1>
+
+        <table id="resultsDisplay">
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Year</th>
+                <th>Genre</th>
+                <th>Popularity</th>
+                <th>Button</th>
+            </tr>
+        </table>
+
+    </section>
+
+
+
+</div>
+
+<div class="displayer" id="song-view"> <!-- SingleSongView -->
+    <header id="head0">
+        <h1>$SingleSongView</h1>
+        <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
+        <button id="reloader" onClick="location.reload()">RELOAD</button>
+        <button id="showSearch" onClick="showSearchView()">showSearch</button>
+        <!-- <button id="showSong" onClick="showSongView()">showSong</button> -->
+        <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button>
+    </header>
+    <section id="left1">
+        <h2>Song Information</h2>
+        <div id="songInfos"></div>
+        <h2>Analysis of Data</h2>
+        <ul id="analysisData"></ul>
+    </section>
+
+
+
+    <section style="display:none" id="right3">
+
+        <div style="display:block">
+            <canvas id="myChart"></canvas>
+        </div>
+        <!-- Chart Base from: (https://www.chartjs.org) -->
+        <div id="theChartBox1">
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+<div class="displayer" id="playlist-view"> <!-- PlaylistView -->
+    <header id="head0">
+        <h1>$PlaylistView</h1>
+        <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
+        <button id="reloader" onClick="location.reload()">RELOAD</button>
+        <button id="showSearch" onClick="showSearchView()">showSearch</button>
+        <button id="showSong" onClick="showSongView()">showSong</button>
+        <!-- <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button> -->
+    </header>
+
+    <section id="left1">
+        <div>
+            <h1>Playlist Details</h1>
+            <p>${#ofsongsinlist}</p>
+            <p>${popularityrankings?}</p>
+        </div>
+
+        <table id="playlistTable">
+            <tr>
+                <th>Title
+                    <!-- <div id="sortButtons">
+<button id="sortASC" onClick="sortResultsAsc()">ASC</button>
+<button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
+</div> -->
+                </th>
+                <th>Artist</th>
+                <th>Year</th>
+                <th>Genre</th>
+                <th>Popularity</th>
+                <th>""</th>
+            </tr>
+            <!-- forEachEntryinPlaylist -->
+            <!-- createElement("<tr>");
+createElement("<td><a href="goToSongPage($t)">")
+createElement("</a></td>")
+createElement("<td>a")
+createElement("</a></td>") -->
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td><button>RMV</button></td>
+            </tr>
+            <!-- Endof"Loop" -->
+        </table>
+
+    </section>
+
+
+    <section id="centre2">
+
+    </section>
+</div>

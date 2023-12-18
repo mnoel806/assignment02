@@ -18,10 +18,10 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         //load Artists
-
         const artistURL = "starting-files/artists.json";
         const artistSel = document.querySelector("#artistSearch");
         const songSel = document.querySelector("#songSearch");
+        const songSelByArt = document.querySelector("#songSearchByArt");
         //Now Fetching Artists
         fetch(artistURL)
             .then(response => response.json())
@@ -30,6 +30,7 @@
         optArt.textContent = "Pick an Artist";
         optArt.value = 0;
         artistSel.appendChild(optArt);
+        // loadSongs();
 
         function populateArtists(artistData) {
             for (let art of artistData) {
@@ -58,218 +59,293 @@
 
             }
         }
+        //Now Fetching Songs
+        const api = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
+        // const songURL = "starting-files/sample-songs.json";
+
+
+        // const songSelByArt = document.querySelector("#songSearchByArt");
+
+        // const songSel = document.querySelector("#songSearch");
+
+
+        fetch(api)
+            .then(response => response.json())
+            .then(data => { populateSongs(data) })
+        const opt1 = document.createElement("option");
+        opt1.textContent = "Pick a Song";
+        opt1.value = 0;
+
+
+        songSel.appendChild(opt1);
+        songSelByArt.appendChild(opt1);
+
+        function populateSongs(songData) {
+            for (let s of songData) {
+                const optS = document.createElement("option");
+                optS.textContent = s.title;
+                optS.songID = s.song_id;
+                optS.title = s.title;
+                optS.year = s.year;
+                optS.artistID = s.artist.id;
+                optS.artist = s.artist.name;
+                optS.genreID = s.genre.id;
+                optS.genre = s.genre.name;
+                optS.durationInSec = s.details.duration;
+                optS.bpm = s.details.bpm;
+                optS.popul = s.details.popularity;
+                optS.loudness = s.details.loudness;
+                optS.energy = s.analytics.energy;
+                optS.danceability = s.analytics.danceability;
+                optS.liveness = s.analytics.liveness;
+                optS.valence = s.analytics.valence;
+                optS.acousticness = s.analytics.acousticness;
+                optS.speechiness = s.analytics.speechiness;
+
+                songSel.appendChild(optS);
+                songSelByArt.appendChild(optS);
+
+            }
+
+        }
+        songSel.addEventListener('click', function (e) {
+            if (e.target.tagName.toLowerCase() === 'option') {
+                console.log(e.target.title + ' clicked');
+
+                loadSongResults(e.target);
+                //pass in the song-object for the browse/search
+                songsDisplayed(e.target);
+                //takes you to selected song info
+                const charti = document.querySelector("#right3");
+                charti.style.display = "block";
+
+                makeChart(e.target);
+            }
+        })
     });
 
 
-        function loadSongs() {
-            const api = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
+                                                                                                                                    function loadSongs() {
+                                                                                                                                        const api = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
             // const songURL = "starting-files/sample-songs.json";
-            const songSel = document.querySelector("#songSearch");
-            fetch(api)
-                .then(response => response.json())
-                .then(data => { populateSongs(data) })
-            const opt1 = document.createElement("option");
-            opt1.textContent = "Pick a Song";
-            opt1.value = 0;
-            const it = 0;
 
-            songSel.appendChild(opt1);
 
-            function populateSongs(songData) {
-                for (let s of songData) {
-                    const optS = document.createElement("option");
-                    optS.textContent = s.title;
-                    optS.songID = s.song_id;
-                    optS.title = s.title;
-                    optS.year = s.year;
-                    optS.artistID = s.artist.id;
-                    optS.artist = s.artist.name;
-                    optS.genreID = s.genre.id;
-                    optS.genre = s.genre.name;
-                    optS.durationInSec = s.details.duration;
-                    optS.bpm = s.details.bpm;
-                    optS.popul = s.details.popularity;
-                    optS.loudness = s.details.loudness;
-                    optS.energy = s.analytics.energy;
-                    optS.danceability = s.analytics.danceability;
-                    optS.liveness = s.analytics.liveness;
-                    optS.valence = s.analytics.valence;
-                    optS.acousticness = s.analytics.acousticness;
-                    optS.speechiness = s.analytics.speechiness;
+                                                                                                                                    const songSelByArt = document.querySelector("#songSearchByArt");
 
-                    songSel.appendChild(optS);
-                }
-                it++;
-            }
-            songSel.addEventListener('click', function (e) {
-                if (e.target.tagName.toLowerCase() === 'option') {
-                    console.log(e.target.title + ' clicked');
+                                                                                                                                    const songSel = document.querySelector("#songSearch");
 
-                    loadSongResults(e.target);
-                    //pass in the song-object for the browse/search
-                    songsDisplayed(e.target);
-                    //takes you to selected song info
-                    const charti = document.querySelector("#right3");
-                    charti.style.display = "block";
 
-                    makeChart(e.target);
-                }
-            })
-        }
+                                                                                                                                    fetch(api)
+                                                                                                                                        .then(response => response.json())
+                                                                                                                                        .then(data => { populateSongs(data) })
+                                                                                                                                    const opt1 = document.createElement("option");
+                                                                                                                                    opt1.textContent = "Pick a Song";
+                                                                                                                                    opt1.value = 0;
+
+
+                                                                                                                                    songSel.appendChild(opt1);
+                                                                                                                                    songSelByArt.appendChild(opt1);
+
+                                                                                                                                    function populateSongs(songData) {
+                                                                                                                                        for (let s of songData) {
+                                                                                                                                            const optS = document.createElement("option");
+                                                                                                                                            optS.textContent = s.title;
+                                                                                                                                            optS.songID = s.song_id;
+                                                                                                                                            optS.title = s.title;
+                                                                                                                                            optS.year = s.year;
+                                                                                                                                            optS.artistID = s.artist.id;
+                                                                                                                                            optS.artist = s.artist.name;
+                                                                                                                                            optS.genreID = s.genre.id;
+                                                                                                                                            optS.genre = s.genre.name;
+                                                                                                                                            optS.durationInSec = s.details.duration;
+                                                                                                                                            optS.bpm = s.details.bpm;
+                                                                                                                                            optS.popul = s.details.popularity;
+                                                                                                                                            optS.loudness = s.details.loudness;
+                                                                                                                                            optS.energy = s.analytics.energy;
+                                                                                                                                            optS.danceability = s.analytics.danceability;
+                                                                                                                                            optS.liveness = s.analytics.liveness;
+                                                                                                                                            optS.valence = s.analytics.valence;
+                                                                                                                                            optS.acousticness = s.analytics.acousticness;
+                                                                                                                                            optS.speechiness = s.analytics.speechiness;
+
+                                                                                                                                        songSel.appendChild(optS);
+                                                                                                                                        songSelByArt.appendChild(optS);
+
+                                                                                                                                    }
+
+                                                                                                                                    }
+                                                                                                                                    songSel.addEventListener('click', function (e) {
+                                                                                                                                        if (e.target.tagName.toLowerCase() === 'option') {
+                                                                                                                                            console.log(e.target.title + ' clicked');
+
+                                                                                                                                        loadSongResults(e.target);
+                                                                                                                                        //pass in the song-object for the browse/search
+                                                                                                                                        songsDisplayed(e.target);
+                                                                                                                                        //takes you to selected song info
+                                                                                                                                        const charti = document.querySelector("#right3");
+                                                                                                                                        charti.style.display = "block";
+
+                                                                                                                                        makeChart(e.target);
+                                                                                                                                    }
+                                                                                                                                })
+                                                                                                                                }
 
 
 </script>
 
-<div class="displayer" id="search-view"> <!-- SongSearchView -->
-    <header id="head0">
-        <h1>Songs n Stuff</h1>
-        <!-- Title to be dynamic later -->
-    <!-- <button id="playlistBTN">.onClick(GoToPlaylist())</button> -->
-    <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
-    <button id="reloader" onClick="location.reload()">RELOAD</button>
-    <!-- <button id="showSearch" onClick="showSearchView()">showSearch</button> -->
-    <button id="showSong" onClick="showSongView()">showSong</button>
-    <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button>
-    </header>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
 
-<!-- These sections will be replaced as the user does the navigating -->
-<section id="left1">
-    <h1>Basic Search</h1>
-<!-- <form id="search-form" action="">
-<p>Search type:</p>
-<input type="radio" name="search-options" id="search-title">
-<label for="search-title">Song Title ${all.the.titles}(Dropdown)</label><br>
-<input type="radio" name="search-options" id="search-artist">
-<label for="search-options">Artist Name ${all.the.artists}</label><br>
-<input type="radio" name="search-options" id="search-genre">
-<label for="search-options">Genre ${all.the.genres}</label><br>
-<br>
-<input type="submit" value="Submit">
-<input type="reset" value="Clear">
-</form> -->
+        const artistAPI = "starting-files/artists.json";
+        const songsAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
 
-    <div id="searcher">
-        <select name="artistSearch" id="artistSearch" textContext="Pick me"></select>
-        <select name="songSearch" id="songSearch"></select>
-        <!-- <select name="genreSearch" id="genreSearch"></select> -->
-    </div>
-    <br>
-    <br>
-    <button id="btnswp01" onClick="artSongSwap()">Click to Search By Song</button>
-    <button id="btnswp02" onClick="artSongSwap()">Click to Search By Artist</button>
-</section>
-<!-- this will be for that searchform once it's fully functional -->
+        const getArtistsButton = document.querySelector("#getArtists");
+        const getSongsButton = document.querySelector("#getSongs");
+        const getGenreButton = document.querySelector("#getGenres");
+        const realSearch = document.querySelector("#realSearch");
+        const artistsList = document.querySelector("#artistsList");
+        const songsList = document.querySelector("#songsList");
+        const genreList = document.querySelector("#genreList");
+        const artistSongs = document.querySelector("#songsFromArtistList");
+        artistsList.style.display = "none";
+        songsList.style.display = "none";
+        genreList.style.display = "none";
+        artistSongs.style.display="none";
+
+        getArtistsButton.addEventListener('click', displayAllArtists);
+        getSongsButton.addEventListener('click', displayAllSongs);
+        getGenreButton.addEventListener('click', displayAllGenres);
 
 
-<section id="centre2">
-<h1>Browse/Search Results</h1>
-
-<table id="resultsDisplay">
-        <tr>
-            <th>Title</th>
-            <th>Artist</th>
-            <th>Year</th>
-            <th>Genre</th>
-            <th>Popularity</th>
-            <th>Button</th>
-        </tr>
-</table>
-
-</section>
-
-
-
-</div>
-
-<div class="displayer" id="song-view"> <!-- SingleSongView -->
-    <header id="head0">
-        <h1>$SingleSongView</h1>
-        <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
-        <button id="reloader" onClick="location.reload()">RELOAD</button>
-        <button id="showSearch" onClick="showSearchView()">showSearch</button>
-        <!-- <button id="showSong" onClick="showSongView()">showSong</button> -->
-        <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button>
-        </header>
-    <section id="left1">
-        <h2>Song Information</h2>
-        <div id="songInfos"></div>
-        <h2>Analysis of Data</h2>
-        <ul id="analysisData"></ul>
-        </section>
-
-
-
-        <section style="display:none" id="right3">
-
-            <div style="display:block">
-                <canvas id="myChart"></canvas>
-            </div>
-            <!-- Chart Base from: (https://www.chartjs.org) -->
-            <div id="theChartBox1">
-                <div>
-                    <canvas id="myChart"></canvas>
-                </div>
+        function displayAllArtists() {
+            fetch(artistAPI)
+                .then(resp => resp.json())
+                .then(artistsData => {
+                    artistsList.style.display = "block";
+                    songsList.style.display = "none";
+                    genreList.style.display = "none";
+                    artistsData.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c.name;
+                        opt.textContent = c.name;
+                        artistsList.appendChild(opt);
+                    });
+                    //Load the songs list
         
-            </div>
-            </section>
+                    artistsList.addEventListener('input', displayAllSongs);
+                    // artistsList.addEventListener('input', loadSongListOf(artist));
+                })
+        }
+                    
 
-</div>
+        function displayAllSongs() {
+            fetch(songsAPI)
+                .then(resp => resp.json())
+                .then(songsData => {
+                    artistsList.style.display = "block";
+                    songsList.style.display = "block";
+        
+                    genreList.style.display = "none";
+                    songsData.forEach(s => {
+                        const optS = document.createElement("option");
+                        optS.value = s.song_id;
+                        optS.textContent = s.title;
+                        optS.songID = s.song_id;
+                        optS.title = s.title;
+                        optS.year = s.year;
+                        optS.artistID = s.artist.id;
+                        optS.artist = s.artist.name;
+                        optS.genreID = s.genre.id;
+                        optS.genre = s.genre.name;
+                        optS.durationInSec = s.details.duration;
+                        optS.bpm = s.details.bpm;
+                        optS.popul = s.details.popularity;
+                        optS.loudness = s.details.loudness;
+                        optS.energy = s.analytics.energy;
+                        optS.danceability = s.analytics.danceability;
+                        optS.liveness = s.analytics.liveness;
+                        optS.valence = s.analytics.valence;
+                        optS.acousticness = s.analytics.acousticness;
+                        optS.speechiness = s.analytics.speechiness;
+                        songsList.appendChild(optS);
+                    });
+                    //add load song info
+                    // songsList.addEventListener('input', loadSongData());
+                    // songsList.addEventListener('input', loadSongOntoPlaylist());
+                    // songsList.addEventListener('input', loadSongIntoHistory());
+                })
+        }
 
-<div class="displayer" id="playlist-view"> <!-- PlaylistView -->
-    <header id="head0">
-        <h1>$PlaylistView</h1>
-        <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
-        <button id="reloader" onClick="location.reload()">RELOAD</button>
-        <button id="showSearch" onClick="showSearchView()">showSearch</button>
-        <button id="showSong" onClick="showSongView()">showSong</button>
-        <!-- <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button> -->
-    </header>
+        function displayAllGenres() {
+            // console.log(s.genre);
+            fetch(songsAPI)
+                .then(resp => resp.json())
+                .then(genreData => {
+                    songsList.style.display = "none";
+                    artistsList.style.display = "none";
+                    genreList.style.display = "block";
+                    genreData.forEach(g => {
+                        const optG = document.createElement("option");
+                        optG.value = g.genre.id;
+                        optG.textContent = g.genre.name;
+                        genreList.appendChild(optG);
 
-<section id="left1">
-    <div>
-        <h1>Playlist Details</h1>
-        <p>${#ofsongsinlist}</p>
-        <p>${popularityrankings?}</p>
-    </div>
+                    })
+                })
+        }
+        
+        function loadSongListOf(artist){
+            //foreach song for this artist
+            for(song of artist){
+                forEach(artist => {
+                        const optSL = document.createElement("option");
+                        optSL.value = "";
+                        optSL.textContent = "";
+                        genreList.appendChild(optSL);
+                })
+        
+            }
+    }
+})
 
-<table id="playlistTable">
-    <tr>
-        <th>Title
-            <!-- <div id="sortButtons">
-<button id="sortASC" onClick="sortResultsAsc()">ASC</button>
-<button id="sortDSC" onClick="sortResultsDsc()">DSC</button>
-</div> -->
-        </th>
-        <th>Artist</th>
-        <th>Year</th>
-        <th>Genre</th>
-        <th>Popularity</th>
-        <th>""</th>
-    </tr>
-    <!-- forEachEntryinPlaylist -->
-    <!-- createElement("<tr>");
-createElement("<td><a href="goToSongPage($t)">")
-createElement("</a></td>")
-createElement("<td>a")
-createElement("</a></td>") -->
-    <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-        <td><button>RMV</button></td>
-    </tr>
-    <!-- Endof"Loop" -->
-</table>
+   
+                   </script>
 
-</section>
+<header>
+    <h1>What I should've done first</h1>
+    <button id="getGenres">Search By Genre</button>
+    <button id="getArtists">Search By Artists</button>
+    <button id="getSongs">Search By Songs</button>
+    <br>
+</header>
+<main>
+    <section id="realSearch">
+        <select name="genreList" id="genreList">Only exists if Genre Button is Clicked</select>
+        <br>
+        <select name="artistsList" id="artistsList">Only exists if Artist Button is Clicked</select>
+        <br>
+        <select name="songsList" id="songsList">Usually exists if Song Button is Clicked</select>
+        <br>
+        <select name="songsFromArtistList" id="songsFromArtistList">Only exists if Artist Button was Clicked then an Artist Selected</select>
 
+    </section>
 
-<section id="centre2">
+    <section id="results">
+        <h1>Browse/Search Results</h1>
 
-</section>
-</div>
+        <table id="resultsDisplay">
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Year</th>
+                <th>Genre</th>
+                <th>Popularity</th>
+                <th>Button</th>
+            </tr>
+        </table>
+
+    </section>
+</main>
 
 <footer>
     <h2>FOOTER</h2>
