@@ -50,30 +50,33 @@ function artSongSwap() {
 
 
 // Loading the browse results then select song
-function loadSongResults(song) {
-    const theList = document.querySelector("#resultsDisplay");
-    const tr1 = document.createElement("tr");
-    const td1 = document.createElement("td");
-    td1.textContent = song.title;
-    // alert(song.title);
-    tr1.appendChild(td1);
-    const td2 = document.createElement("td");
-    td2.textContent = song.artist;
-    tr1.appendChild(td2);
-    const td3 = document.createElement("td");
-    td3.textContent = song.year;
-    tr1.appendChild(td3);
-    const td4 = document.createElement("td");
-    td4.textContent = song.genre;
-    tr1.appendChild(td4);
-    const td5 = document.createElement("td");
-    td5.textContent = song.popul;
-    tr1.appendChild(td5);
-    const td6 = document.createElement("btn");
-    td6.textContent = "ADD";
-    tr1.appendChild(td6);
-    theList.appendChild(tr1);
-}
+// function loadSongResults(song) {
+
+
+
+//     const theList = document.querySelector("#resultsDisplay");
+//     const tr1 = document.createElement("tr");
+//     const td1 = document.createElement("td");
+//     td1.textContent = song.title;
+//     // alert(song.title);
+//     tr1.appendChild(td1);
+//     const td2 = document.createElement("td");
+//     td2.textContent = song.artist;
+//     tr1.appendChild(td2);
+//     const td3 = document.createElement("td");
+//     td3.textContent = song.year;
+//     tr1.appendChild(td3);
+//     const td4 = document.createElement("td");
+//     td4.textContent = song.genre;
+//     tr1.appendChild(td4);
+//     const td5 = document.createElement("td");
+//     td5.textContent = song.popul;
+//     tr1.appendChild(td5);
+//     const td6 = document.createElement("button");
+//     td6.textContent = "ADD";
+//     tr1.appendChild(td6);
+//     theList.appendChild(tr1);
+// }
 function timeConvert(seconds) {
     let minutes = Math.floor(seconds / 60);
     return minutes;
@@ -83,8 +86,8 @@ function timeRemainder(seconds) {
     return remainingSeconds;
 }
 
-//This is what will be loaded into the Song Page
-function songsDisplayed(song) {
+//This is what will be loaded into the Song Info Page
+function songDisplayed(song) {
     const theList = document.querySelector("#songInfos");
 
     const p1 = document.createElement("p");

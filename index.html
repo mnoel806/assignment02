@@ -5,350 +5,273 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Matthew's Musical Adventure!</title>
-<link rel="stylesheet" href="./styleA.css">
+<!-- <link rel="stylesheet" href="./styleA.css"> -->
+<link rel="stylesheet" href="./styleB.css">
 <script src="./js/myFuncts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<!-- leave what is repeatable for now -->
-<!-- Sometimes when I comment things out, a 
-    linter tries to use "hidden" braces and screw with my code -->
+<!-- Do what you can -->
 <body>
 
+
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        //load Artists
-        const artistURL = "starting-files/artists.json";
-        const artistSel = document.querySelector("#artistSearch");
-        const songSel = document.querySelector("#songSearch");
-        const songSelByArt = document.querySelector("#songSearchByArt");
-        //Now Fetching Artists
-        fetch(artistURL)
-            .then(response => response.json())
-            .then(data => { populateArtists(data) })
-        const optArt = document.createElement("option");
-        optArt.textContent = "Pick an Artist";
-        optArt.value = 0;
-        artistSel.appendChild(optArt);
-        // loadSongs();
+                                                                        document.addEventListener("DOMContentLoaded", function () {
 
-        function populateArtists(artistData) {
-            for (let art of artistData) {
-                const optA = document.createElement("option");
-                optA.textContent = art.name;
-                optA.name = art.name;
-                optA.id = art.id;
-                optA.type = art.type;
-                // optA.addEventListener("click", function () {
-                //     this.classList.add("selected");
-                // });
-                artistSel.appendChild(optA);
+                                                                        const artistAPI = "starting-files/artists.json";
+                                                                        const songsAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
 
-            }//End of options being populated
+                                                                        const songsArr = [];
+                                                                        const artsArr = [];
+                                                                        const genreArr = [];
 
+                                                                        const getArtistsButton = document.querySelector("#getArtists");
+                                                                        const getSongsButton = document.querySelector("#getSongs");
+                                                                        const getGenreButton = document.querySelector("#getGenres");
+                                                                        const filters = document.querySelector("#filters");
+                                                                        const artsList = document.querySelector("#artistsList");
+                                                                        const songsLt = document.querySelector("#songsList");
+                                                                        const genreList = document.querySelector("#genreList");
+                                                                        const artistSongs = document.querySelector("#songsFromArtistList");
 
-        }
-        artistSel.onclick = function (e) {
-            if (e.target.tagName.toLowerCase() === 'option') {
-                console.log(e.target.name + ' clicked');
+                                                                        artsList.style.display = "none";
+                                                                        songsLt.style.display = "none";
+                                                                        genreList.style.display = "none";
+                                                                        artistSongs.style.display = "none";
 
-                //only load the songs from the selected artist next+
-                loadArtResults(e.target);
-                songsDisplayed(e.target);
+                                                                        getArtistsButton.addEventListener('click', displayAllArtists);
+                                                                        getSongsButton.addEventListener('click', displayAllSongs);
+                                                                        getGenreButton.addEventListener('click', displayAllGenres);
 
+                                                                        fetch(songsAPI)
+                                                                            .then(resp => resp.json())
+                                                                            .then(artistsData => {
+                                                                            localStorage.setItem('musicDat', JSON.stringify(artistsData));
+                                                                        })
 
-            }
-        }
-        //Now Fetching Songs
-        const api = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
-        // const songURL = "starting-files/sample-songs.json";
+                                                                        function displayAllSongs() {
+                                                                            artsList.style.display = "none";
+                                                                            songsLt.style.display = "block";
+                                                                            genreList.style.display = "none";
+                                                                        console.log("Songs am clicked");
+                                                                        filters.style.display = "block";
 
+                                                                        const musicDat = retrieveStorage();
+                                                                        musicDat.forEach(s => {
+                                                                            const opt = document.createElement('option');
+                                                                        opt.setAttribute('value', s.song_id);
+                                                                        opt.setAttribute('textContent', s.title);
+                                                                        opt.textContent = s.title;
+                                                                        opt.songID = s.song_id;
+                                                                        opt.title = s.title;
+                                                                        opt.year = s.year;
+                                                                        opt.artistID = s.artist.id;
+                                                                        opt.artist = s.artist.name;
+                                                                        opt.genreID = s.genre.id;
+                                                                        opt.genre = s.genre.name;
+                                                                        opt.durationInSec = s.details.duration;
+                                                                        opt.bpm = s.details.bpm;
+                                                                        opt.popul = s.details.popularity;
+                                                                        opt.loudness = s.details.loudness;
+                                                                        opt.energy = s.analytics.energy;
+                                                                        opt.danceability = s.analytics.danceability;
+                                                                        opt.liveness = s.analytics.liveness;
+                                                                        opt.valence = s.analytics.valence;
+                                                                        opt.acousticness = s.analytics.acousticness;
+                                                                        opt.speechiness = s.analytics.speechiness;
+                                                                        songsLt.appendChild(opt);
+                                                                    });
+                                                                            document.querySelector("#songsList > option:nth-child(2)")
+                                                                            const slt = document.querySelectorAll("#songsList > option");
+                                                                            //Event Handlers
+                                                                            songsLt.addEventListener('input', (e) => {
+                                                                                console.log(e.target);
+                                                                                loadSongResults(e.target);
+                                                                            })
 
-        // const songSelByArt = document.querySelector("#songSearchByArt");
-
-        // const songSel = document.querySelector("#songSearch");
-
-
-        fetch(api)
-            .then(response => response.json())
-            .then(data => { populateSongs(data) })
-        const opt1 = document.createElement("option");
-        opt1.textContent = "Pick a Song";
-        opt1.value = 0;
-
-
-        songSel.appendChild(opt1);
-        songSelByArt.appendChild(opt1);
-
-        function populateSongs(songData) {
-            for (let s of songData) {
-                const optS = document.createElement("option");
-                optS.textContent = s.title;
-                optS.songID = s.song_id;
-                optS.title = s.title;
-                optS.year = s.year;
-                optS.artistID = s.artist.id;
-                optS.artist = s.artist.name;
-                optS.genreID = s.genre.id;
-                optS.genre = s.genre.name;
-                optS.durationInSec = s.details.duration;
-                optS.bpm = s.details.bpm;
-                optS.popul = s.details.popularity;
-                optS.loudness = s.details.loudness;
-                optS.energy = s.analytics.energy;
-                optS.danceability = s.analytics.danceability;
-                optS.liveness = s.analytics.liveness;
-                optS.valence = s.analytics.valence;
-                optS.acousticness = s.analytics.acousticness;
-                optS.speechiness = s.analytics.speechiness;
-
-                songSel.appendChild(optS);
-                songSelByArt.appendChild(optS);
-
-            }
-
-        }
-        songSel.addEventListener('click', function (e) {
-            if (e.target.tagName.toLowerCase() === 'option') {
-                console.log(e.target.title + ' clicked');
-
-                loadSongResults(e.target);
-                //pass in the song-object for the browse/search
-                songsDisplayed(e.target);
-                //takes you to selected song info
-                const charti = document.querySelector("#right3");
-                charti.style.display = "block";
-
-                makeChart(e.target);
-            }
-        })
-    });
+                                                                        }
 
 
-                                                                                                                                    function loadSongs() {
-                                                                                                                                        const api = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
-            // const songURL = "starting-files/sample-songs.json";
+                                                                        function displayAllArtists() {
+                                                                            console.log("Artists am clicked");
+                                                                            artsList.style.display = "block";
+                                                                            songsLt.style.display = "none";
+                                                                            genreList.style.display = "none";
+                                                                            filters.style.display = "block";
+
+                                                                            const musicDat = retrieveStorage();
+                                                                            musicDat.forEach(a => {
+                                                                                const optA = document.createElement('option');
+                                                                                optA.setAttribute('value', a.artist.id);
+                                                                                optA.setAttribute('textContent', a.artist.name);
+                                                                                optA.textContent = a.artist.name;
+                                                                                optA.artistID = a.artist.id;
+                                                                                optA.artist = a.artist.name;
+
+                                                                                artsList.appendChild(optA);
+
+                                                                            })
+
+                                                                        artsList.addEventListener('input', (e) => {
+                                                                            console.log(e.target.value);
+                                                                            displayAllSongs();
+                                                                        })
+                                                                    }
 
 
-                                                                                                                                    const songSelByArt = document.querySelector("#songSearchByArt");
-
-                                                                                                                                    const songSel = document.querySelector("#songSearch");
 
 
-                                                                                                                                    fetch(api)
-                                                                                                                                        .then(response => response.json())
-                                                                                                                                        .then(data => { populateSongs(data) })
-                                                                                                                                    const opt1 = document.createElement("option");
-                                                                                                                                    opt1.textContent = "Pick a Song";
-                                                                                                                                    opt1.value = 0;
+                                                                        // STORAGE FUNCTIONS
+
+                                                                        function retrieveStorage() {
+                                                                            return JSON.parse(localStorage.getItem('musicDat')) || [];
+                                                                        }
+
+                                                                        function updateStorage(artistsData) {
+                                                                            localStorage.setItem('musicDat', JSON.stringify(artistsData));
+                                                                        }
+
+                                                                        function emptyStorage() {
+                                                                            localStorage.removeItem('musicDat');
+                                                                        }
+                                                                        function displayAllGenres() {
+                                                                            // console.log(s.genre);
+                                                                            fetch(songsAPI)
+                                                                                .then(resp => resp.json())
+                                                                                .then(genreData => {
+                                                                                    songsList.style.display = "none";
+                                                                                    artistsList.style.display = "none";
+                                                                                    genreList.style.display = "block";
+                                                                                    genreData.forEach(g => {
+                                                                                        const optG = document.createElement("option");
+                                                                                        optG.value = g.genre.id;
+                                                                                        optG.textContent = g.genre.name;
+                                                                                        genreList.appendChild(optG);
+                                                                                })
+                                                                            })
+                                                                    }
+
+                                                                        function loadSongResults(val) {
+                                                                            console.log(val);
+
+                                                                            // const selectedSong = retrieveStorage()
+                                                                            const oneSong = val.filter(song => song.song_id = 1167);
+
+                                                                            let indexSong = [];
 
 
-                                                                                                                                    songSel.appendChild(opt1);
-                                                                                                                                    songSelByArt.appendChild(opt1);
+                                                                            // song.filter(
+                                                                            //     oneSong => oneSong.value = val
+                                                                            // );
+                                                                            console.log(oneSong);
+                                                                            let song = val;
 
-                                                                                                                                    function populateSongs(songData) {
-                                                                                                                                        for (let s of songData) {
-                                                                                                                                            const optS = document.createElement("option");
-                                                                                                                                            optS.textContent = s.title;
-                                                                                                                                            optS.songID = s.song_id;
-                                                                                                                                            optS.title = s.title;
-                                                                                                                                            optS.year = s.year;
-                                                                                                                                            optS.artistID = s.artist.id;
-                                                                                                                                            optS.artist = s.artist.name;
-                                                                                                                                            optS.genreID = s.genre.id;
-                                                                                                                                            optS.genre = s.genre.name;
-                                                                                                                                            optS.durationInSec = s.details.duration;
-                                                                                                                                            optS.bpm = s.details.bpm;
-                                                                                                                                            optS.popul = s.details.popularity;
-                                                                                                                                            optS.loudness = s.details.loudness;
-                                                                                                                                            optS.energy = s.analytics.energy;
-                                                                                                                                            optS.danceability = s.analytics.danceability;
-                                                                                                                                            optS.liveness = s.analytics.liveness;
-                                                                                                                                            optS.valence = s.analytics.valence;
-                                                                                                                                            optS.acousticness = s.analytics.acousticness;
-                                                                                                                                            optS.speechiness = s.analytics.speechiness;
+                                                                        const theList = document.querySelector("#resultsDisplay");
+                                                                        const tr1 = document.createElement("tr");
+                                                                        const td1 = document.createElement("td");
+                                                                        td1.textContent = song.title;
+                                                                        // alert(song.title);
+                                                                        tr1.appendChild(td1);
+                                                                        const td2 = document.createElement("td");
+                                                                        td2.textContent = song.artist;
+                                                                        tr1.appendChild(td2);
+                                                                        const td3 = document.createElement("td");
+                                                                        td3.textContent = song.year;
+                                                                        tr1.appendChild(td3);
+                                                                        const td4 = document.createElement("td");
+                                                                        td4.textContent = song.genre;
+                                                                        tr1.appendChild(td4);
+                                                                        const td5 = document.createElement("td");
+                                                                        td5.textContent = song.popul;
+                                                                        tr1.appendChild(td5);
+                                                                        const td6 = document.createElement("button");
+                                                                        td6.textContent = "ADD";
+                                                                        tr1.appendChild(td6);
+                                                                        theList.appendChild(tr1);
+                                                                    }
+                                                                    }) //END OF DOMLOAD
 
-                                                                                                                                        songSel.appendChild(optS);
-                                                                                                                                        songSelByArt.appendChild(optS);
-
-                                                                                                                                    }
-
-                                                                                                                                    }
-                                                                                                                                    songSel.addEventListener('click', function (e) {
-                                                                                                                                        if (e.target.tagName.toLowerCase() === 'option') {
-                                                                                                                                            console.log(e.target.title + ' clicked');
-
-                                                                                                                                        loadSongResults(e.target);
-                                                                                                                                        //pass in the song-object for the browse/search
-                                                                                                                                        songsDisplayed(e.target);
-                                                                                                                                        //takes you to selected song info
-                                                                                                                                        const charti = document.querySelector("#right3");
-                                                                                                                                        charti.style.display = "block";
-
-                                                                                                                                        makeChart(e.target);
-                                                                                                                                    }
-                                                                                                                                })
-                                                                                                                                }
 
 
 </script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-        const artistAPI = "starting-files/artists.json";
-        const songsAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
-
-        const getArtistsButton = document.querySelector("#getArtists");
-        const getSongsButton = document.querySelector("#getSongs");
-        const getGenreButton = document.querySelector("#getGenres");
-        const realSearch = document.querySelector("#realSearch");
-        const artistsList = document.querySelector("#artistsList");
-        const songsList = document.querySelector("#songsList");
-        const genreList = document.querySelector("#genreList");
-        const artistSongs = document.querySelector("#songsFromArtistList");
-        artistsList.style.display = "none";
-        songsList.style.display = "none";
-        genreList.style.display = "none";
-        artistSongs.style.display="none";
-
-        getArtistsButton.addEventListener('click', displayAllArtists);
-        getSongsButton.addEventListener('click', displayAllSongs);
-        getGenreButton.addEventListener('click', displayAllGenres);
-
-
-        function displayAllArtists() {
-            fetch(artistAPI)
-                .then(resp => resp.json())
-                .then(artistsData => {
-                    artistsList.style.display = "block";
-                    songsList.style.display = "none";
-                    genreList.style.display = "none";
-                    artistsData.forEach(c => {
-                        const opt = document.createElement('option');
-                        opt.value = c.name;
-                        opt.textContent = c.name;
-                        artistsList.appendChild(opt);
-                    });
-                    //Load the songs list
-        
-                    artistsList.addEventListener('input', displayAllSongs);
-                    // artistsList.addEventListener('input', loadSongListOf(artist));
-                })
-        }
-                    
-
-        function displayAllSongs() {
-            fetch(songsAPI)
-                .then(resp => resp.json())
-                .then(songsData => {
-                    artistsList.style.display = "block";
-                    songsList.style.display = "block";
-        
-                    genreList.style.display = "none";
-                    songsData.forEach(s => {
-                        const optS = document.createElement("option");
-                        optS.value = s.song_id;
-                        optS.textContent = s.title;
-                        optS.songID = s.song_id;
-                        optS.title = s.title;
-                        optS.year = s.year;
-                        optS.artistID = s.artist.id;
-                        optS.artist = s.artist.name;
-                        optS.genreID = s.genre.id;
-                        optS.genre = s.genre.name;
-                        optS.durationInSec = s.details.duration;
-                        optS.bpm = s.details.bpm;
-                        optS.popul = s.details.popularity;
-                        optS.loudness = s.details.loudness;
-                        optS.energy = s.analytics.energy;
-                        optS.danceability = s.analytics.danceability;
-                        optS.liveness = s.analytics.liveness;
-                        optS.valence = s.analytics.valence;
-                        optS.acousticness = s.analytics.acousticness;
-                        optS.speechiness = s.analytics.speechiness;
-                        songsList.appendChild(optS);
-                    });
-                    //add load song info
-                    // songsList.addEventListener('input', loadSongData());
-                    // songsList.addEventListener('input', loadSongOntoPlaylist());
-                    // songsList.addEventListener('input', loadSongIntoHistory());
-                })
-        }
-
-        function displayAllGenres() {
-            // console.log(s.genre);
-            fetch(songsAPI)
-                .then(resp => resp.json())
-                .then(genreData => {
-                    songsList.style.display = "none";
-                    artistsList.style.display = "none";
-                    genreList.style.display = "block";
-                    genreData.forEach(g => {
-                        const optG = document.createElement("option");
-                        optG.value = g.genre.id;
-                        optG.textContent = g.genre.name;
-                        genreList.appendChild(optG);
-
-                    })
-                })
-        }
-        
-        function loadSongListOf(artist){
-            //foreach song for this artist
-            for(song of artist){
-                forEach(artist => {
-                        const optSL = document.createElement("option");
-                        optSL.value = "";
-                        optSL.textContent = "";
-                        genreList.appendChild(optSL);
-                })
-        
-            }
-    }
-})
-
-   
-                   </script>
-
 <header>
-    <h1>What I should've done first</h1>
-    <button id="getGenres">Search By Genre</button>
+<section class="box">
+    <h1>What I should've done</h1>
+
     <button id="getArtists">Search By Artists</button>
-    <button id="getSongs">Search By Songs</button>
-    <br>
+<button id="getGenres">Search By Genre</button>
+<button id="getSongs">Search By Songs</button>
+<br>
+</section>
 </header>
-<main>
-    <section id="realSearch">
-        <select name="genreList" id="genreList">Only exists if Genre Button is Clicked</select>
-        <br>
-        <select name="artistsList" id="artistsList">Only exists if Artist Button is Clicked</select>
-        <br>
-        <select name="songsList" id="songsList">Usually exists if Song Button is Clicked</select>
-        <br>
-        <select name="songsFromArtistList" id="songsFromArtistList">Only exists if Artist Button was Clicked then an Artist Selected</select>
-
+<main class="container">
+    <section class="box">
+        <ul id="eosA"></ul>
+        <ul id="eosB"></ul>
+        <ul id="eosC"></ul>
     </section>
 
-    <section id="results">
-        <h1>Browse/Search Results</h1>
+    <section id="filters" class="box">
+        <article>
+            <select name="theArtistsList" id="artistsList">Pick an Artist
+            </select>
+            <br>
+<select name="theSongsList" id="songsList" class="resultsList">Pick a Song
+</select>
+<br>
+<select name="theGenreList" id="genreList">Pick Genre
+</select>
+<br>
+<select name="theSongsFromArtistList" id="songsFromArtistList">Only exists if Artist Button was Clicked then an Artist
+    Selected</select>
+</article>
+<div></div>
 
-        <table id="resultsDisplay">
-            <tr>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Year</th>
-                <th>Genre</th>
-                <th>Popularity</th>
-                <th>Button</th>
-            </tr>
-        </table>
+</section>
 
-    </section>
+<section id="results" class="box">
+    <h1>Browse/Search Results</h1>
+
+<table id="resultsDisplay">
+    <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Year</th>
+        <th>Genre</th>
+        <th>Popularity</th>
+        <th>Button</th>
+    </tr>
+</table>
+
+</section>
+<section id="left1" style="display:none">
+    <h1>Basic Search</h1>
+
+
+    <div id="searcher">
+        <select name="artistSearch" id="artistSearch" textContext="Pick me"></select>
+        <select name="songSearch" id="songSearch"></select>
+        <select name="songSearchByArt" id="songSearchByArt">"Pick me"</select>
+        <!-- <select name="genreSearch" id="genreSearch"></select> -->
+    </div>
+    <br>
+    <button id="btnswp01" onClick="artSongSwap()">Click to Search By Song</button>
+    <button id="btnswp02" onClick="artSongSwap()">Click to Search By Artist</button>
+</section>
+
+<section id="left1" class="box">
+    <h2>Song Information</h2>
+    <div id="songInfos"></div>
+    <h2>Analysis of Data</h2>
+    <ul id="analysisData"></ul>
+</section>
+
 </main>
 
+
 <footer>
-    <h2>FOOTER</h2>
+<h2>FOOTER</h2>
 </footer>
 </body>
 <!-- Putting Scripts Here -->
