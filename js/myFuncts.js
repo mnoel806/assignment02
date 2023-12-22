@@ -47,7 +47,9 @@ function artSongSwap() {
 }
 
 
-
+// function addToPlaylist() {
+//     console.log(song.title + ' added');
+// }
 
 // Loading the browse results then select song
 // function loadSongResults(song) {
@@ -77,6 +79,8 @@ function artSongSwap() {
 //     tr1.appendChild(td6);
 //     theList.appendChild(tr1);
 // }
+
+//Functions to get the time displayed properly
 function timeConvert(seconds) {
     let minutes = Math.floor(seconds / 60);
     return minutes;
@@ -87,80 +91,88 @@ function timeRemainder(seconds) {
 }
 
 //This is what will be loaded into the Song Info Page
-function songDisplayed(song) {
-    const theList = document.querySelector("#songInfos");
+function songDisplayed(val) {
+    if (val == 0) {
+        console.log("emptySongsInfo");
+    } else {
+        const theList = document.querySelector("#songInfos");
 
-    const p1 = document.createElement("p");
-    p1.textContent = "Title: " + song.title;
-    theList.appendChild(p1);
-    const p2 = document.createElement("p");
-    p2.textContent = "Artist: " + song.artist;
-    theList.appendChild(p2);
-    const p3 = document.createElement("p");
-    const gtype = "Finder placeholder";
-    p3.textContent = "Artist-type: " + gtype;
+        const selectedSong = retrieveStorage()
+        const result = selectedSong.find((element) => element.song_id == val);
+        console.log(result);
 
-    //do a search. 
-    //     findThis(artist.type, {
-    //         if(p3.artist[0] == artist.id) {
-    //         gtype = artist.type;
-    //     }
-    // });
+        const song = result;
 
-    theList.appendChild(p3);
-    const p4 = document.createElement("p");
-    p4.textContent = "Genre: " + song.genre;
-    theList.appendChild(p4);
-    const p5 = document.createElement("p");
+        makeChart(song);
 
-    p5.textContent = "Duration: " + timeConvert(song.durationInSec) + " Minutes "
-        + timeRemainder(song.durationInSec) + " Seconds";
-    //convert total time to minutes and seconds
-    theList.appendChild(p5);
+        const p1 = document.createElement("p");
+        p1.textContent = "Title: " + song.title;
+        theList.appendChild(p1);
 
-    const dataAnalysis = document.querySelector("#analysisData");
-    const ul1 = document.createElement("ul");
-    dataAnalysis.appendChild(ul1);
-    const li1 = document.createElement("li");
-    li1.textContent = "BPM: " + song.bpm;
-    ul1.appendChild(li1);
+        const p2 = document.createElement("p");
+        p2.textContent = "Artist: " + song.artist.name;
+        theList.appendChild(p2);
 
-    const li2 = document.createElement("li");
-    li2.textContent = "Energy: " + song.energy;
-    li1.appendChild(li2);
+        const p3 = document.createElement("p");
+        p3.textContent = "Genre: " + song.genre.name;
+        theList.appendChild(p3);
 
-    const li3 = document.createElement("li");
-    li3.textContent = "Danceability: " + song.danceability;
-    li2.appendChild(li3);
+        const p4 = document.createElement("p");
+        p4.textContent = "Duration: " + timeConvert(song.details.duration) + " Minutes "
+            + timeRemainder(song.details.duration) + " Seconds";
+        //convert total time to minutes and seconds
+        theList.appendChild(p4);
 
-    const li4 = document.createElement("li");
-    li4.textContent = "Valence: " + song.valence;
-    li3.appendChild(li4);
+        const dataAnalysis = document.querySelector("#analysisData");
+        const ul1 = document.createElement("ul");
+        dataAnalysis.appendChild(ul1);
 
-    const li5 = document.createElement("li");
-    li5.textContent = "Acosticness: " + song.acousticness;
-    li4.appendChild(li5);
+        const li1 = document.createElement("li");
+        li1.textContent = "BPM: " + song.details.bpm;
+        ul1.appendChild(li1);
 
-    const li6 = document.createElement("li");
-    li6.textContent = "Speechiness: " + song.speechiness;
-    li5.appendChild(li6);
+        const li2 = document.createElement("li");
+        li2.textContent = "Energy: " + song.analytics.energy;
+        li1.appendChild(li2);
 
-    const li7 = document.createElement("li");
-    li7.textContent = "Popularity: " + song.popul;
-    li6.appendChild(li7);
+        const li3 = document.createElement("li");
+        li3.textContent = "Danceability: " + song.analytics.danceability;
+        li2.appendChild(li3);
 
+        const li4 = document.createElement("li");
+        li4.textContent = "Liveness: " + song.analytics.liveness;
+        li3.appendChild(li4);
+
+        const li5 = document.createElement("li");
+        li5.textContent = "Valence: " + song.analytics.valence;
+        li4.appendChild(li5);
+
+        const li6 = document.createElement("li");
+        li6.textContent = "Acosticness: " + song.analytics.acousticness;
+        li5.appendChild(li6);
+
+        const li7 = document.createElement("li");
+        li7.textContent = "Speechiness: " + song.analytics.speechiness;
+        li6.appendChild(li7);
+
+        const li8 = document.createElement("li");
+        li8.textContent = "Popularity: " + song.details.popularity;
+        li7.appendChild(li8);
+
+    }
 }
+
 
 function makeChart(song) {
 
     const data = {
         "song_data": [
-            ["Energy", song.energy],
-            ["Danciness", song.danceability],
-            ["Valance", song.valence],
-            ["Acousticness", song.acousticness],
-            ["Speechiness", song.speechiness],
-            ["Popularity", song.popul]
+            ["Energy", song.analytics.energy],
+            ["Danciness", song.analytics.danceability],
+            ["Valance", song.analytics.valence],
+            ["Acousticness", song.analytics.acousticness],
+            ["Speechiness", song.analytics.speechiness],
+            ["Popularity", song.details.popularity]
         ]
     }
     new Chart('myChart', {
@@ -195,6 +207,45 @@ function makeChart(song) {
     });
 }
 
+
+function loadSongResults(val) {
+    // console.log(val);
+    if (val == 0) {
+        console.log("emptyresults");
+    } else {
+
+        const selectedSong = retrieveStorage()
+
+        // console.log(selectedSong);
+        const result = selectedSong.find((element) => element.song_id == val);
+        console.log(result);
+
+        const song = result;
+        const theList = document.querySelector("#resultsDisplay");
+        const tr1 = document.createElement("tr");
+        const td1 = document.createElement("td");
+        td1.textContent = song.title;
+        // alert(song.title);
+        tr1.appendChild(td1);
+        const td2 = document.createElement("td");
+        td2.textContent = song.artist.name;
+        tr1.appendChild(td2);
+        const td3 = document.createElement("td");
+        td3.textContent = song.year;
+        tr1.appendChild(td3);
+        const td4 = document.createElement("td");
+        td4.textContent = song.genre.name;
+        tr1.appendChild(td4);
+        const td5 = document.createElement("td");
+        td5.textContent = song.details.popularity;
+        tr1.appendChild(td5);
+        const td6 = document.createElement("button");
+        td6.textContent = "ADD";
+        tr1.appendChild(td6);
+        theList.appendChild(tr1);
+    }
+}  
+
 function goToRepo() {
     window.location = "https://github.com/mnoel806/assignment02";
 }
@@ -202,36 +253,22 @@ function showCredits() {
     //onMouseOver:Floating Window at mouse with credits
 }
 
+// STORAGE FUNCTIONS
+
+function retrieveStorage() {
+    return JSON.parse(localStorage.getItem('musicDat')) || [];
+}
+
+function updateStorage(artistsData) {
+    localStorage.setItem('musicDat', JSON.stringify(artistsData));
+}
+
+function emptyStorage() {
+    localStorage.removeItem('musicDat');
+}
 
 
 
-
-
-// Loading the browse results
-// function loadResults(song) {
-//     const theList = document.querySelector("#resultsDisplay");
-//     const tr1 = document.createElement("tr");
-//     const td1 = document.createElement("td");
-//     td1.textContent = song.title;
-//     // alert(song.title);
-//     tr1.appendChild(td1);
-//     const td2 = document.createElement("td");
-//     td2.textContent = song.artist;
-//     tr1.appendChild(td2);
-//     const td3 = document.createElement("td");
-//     td3.textContent = song.year;
-//     tr1.appendChild(td3);
-//     const td4 = document.createElement("td");
-//     td4.textContent = song.genre;
-//     tr1.appendChild(td4);
-//     const td5 = document.createElement("td");
-//     td5.textContent = song.popul;
-//     tr1.appendChild(td5);
-//     const td6 = document.createElement("btn");
-//     td6.textContent = "ADD";
-//     tr1.appendChild(td6);
-//     theList.appendChild(tr1);
-// }
 function loadArtResults(artist) {
     const theList = document.querySelector("#resultsDisplay");
     const tr1 = document.createElement("tr");

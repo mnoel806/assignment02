@@ -211,8 +211,8 @@
 
 </script>
 
-<header id="head0" class="box">
-    <section>
+<header id="head0">
+    <section class="box">
         <h1>Songs and Stuff</h1>
         <!-- Title to be dynamic later -->
         <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
@@ -221,39 +221,34 @@
         <!-- <button id="showSong" onClick="showSongView()">showSong</button> -->
         <!-- <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button> -->
     </section>
-<section class="box">
-    <h1>What I should've done</h1>
-<br>
-    <button id="getArtists">Search By Artists</button>
-<button id="getGenres">Search By Genre</button>
-<button id="getSongs">Search By Songs</button>
-<br>
-</section>
+    <br>
+    <section class="box">
+        <h1>What I should've done</h1>
+        <br>
+        <button id="getArtists">Search By Artists</button>
+        <button id="getGenres">Search By Genre</button>
+        <button id="getSongs">Search By Songs</button>
+        <br>
+    </section>
 </header>
 <main class="container">
-    <section class="box">
-        <ul id="eosA"></ul>
-        <ul id="eosB"></ul>
-        <ul id="eosC"></ul>
-    </section>
-
-    <section id="filters" class="box">
+    
+<section class="box" id="filters">
         <article>
             <select name="theArtistsList" id="artistsList">Pick an Artist
             </select>
             <br>
-<select name="theSongsList" id="songsList" class="resultsList">Pick a Song
-</select>
-<br>
-<select name="theGenreList" id="genreList">Pick Genre
-</select>
-<br>
-<select name="theSongsFromArtistList" id="songsFromArtistList">Only exists if Artist Button was Clicked then an Artist
-    Selected</select>
-</article>
-<div></div>
+        <select name="theSongsList" id="songsList" class="resultsList">Pick a Song
+        </select>
+        <br>
+        <select name="theGenreList" id="genreList">Pick Genre
+        </select>
+        <br>
+        <select name="theSongsFromArtistList" id="songsFromArtistList">Only exists if Artist Button was Clicked then an Artist
+            Selected</select>
+        </article>
+    </section>
 
-</section>
 
 <section id="results" class="box" style="display:block">
     <h1>Browse/Search Results</h1>
@@ -270,6 +265,7 @@
 </table>
 
 </section>
+
 <section id="left1" style="display:none">
     <h1>Basic Search</h1>
 
@@ -285,6 +281,7 @@
     <button id="btnswp02" onClick="artSongSwap()">Click to Search By Artist</button>
 </section>
 
+
 <section id="left1" class="box">
     <h2>Song Information</h2>
     <div id="songInfos"></div>
@@ -293,8 +290,8 @@
     <ul id="analysisData"></ul>
 </section>
 
-<section style="display:block" id="right3">
-
+<section style="display:block" id="right3" class="box">
+    <h1>Chart Box</h1>
     <div style="display:block">
         <canvas id="myChart"></canvas>
     </div>
@@ -306,6 +303,7 @@
 
     </div>
 </section>
+
 
 </main>
 
