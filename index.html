@@ -16,189 +16,214 @@
 
 
 <script>
-                                                                        document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-                                                                        const artistAPI = "starting-files/artists.json";
-                                                                        const songsAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
+    // const artistAPI = "starting-files/artists.json";
+    const songsAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
 
-                                                                        const songsArr = [];
-                                                                        const artsArr = [];
-                                                                        const genreArr = [];
+    const getArtistsButton = document.querySelector("#getArtists");
+    const getSongsButton = document.querySelector("#getSongs");
+    const getGenreButton = document.querySelector("#getGenres");
+// const addSongButton = document.querySelector("#resultsDisplay > tr > button");
+    const filters = document.querySelector("#filters");
+    const artsList = document.querySelector("#artistsList");
+    const songsLt = document.querySelector("#songsList");
+    const genreList = document.querySelector("#genreList");
+    const artistSongs = document.querySelector("#songsFromArtistList");
 
-                                                                        const getArtistsButton = document.querySelector("#getArtists");
-                                                                        const getSongsButton = document.querySelector("#getSongs");
-                                                                        const getGenreButton = document.querySelector("#getGenres");
-                                                                        const filters = document.querySelector("#filters");
-                                                                        const artsList = document.querySelector("#artistsList");
-                                                                        const songsLt = document.querySelector("#songsList");
-                                                                        const genreList = document.querySelector("#genreList");
-                                                                        const artistSongs = document.querySelector("#songsFromArtistList");
+    artsList.style.display = "none";
+    songsLt.style.display = "none";
+    genreList.style.display = "none";
+    artistSongs.style.display = "none";
 
-                                                                        artsList.style.display = "none";
-                                                                        songsLt.style.display = "none";
-                                                                        genreList.style.display = "none";
-                                                                        artistSongs.style.display = "none";
-
-                                                                        getArtistsButton.addEventListener('click', displayAllArtists);
-                                                                        getSongsButton.addEventListener('click', displayAllSongs);
-                                                                        getGenreButton.addEventListener('click', displayAllGenres);
-
-                                                                        fetch(songsAPI)
-                                                                            .then(resp => resp.json())
-                                                                            .then(artistsData => {
-                                                                            localStorage.setItem('musicDat', JSON.stringify(artistsData));
-                                                                        })
-
-                                                                        function displayAllSongs() {
-                                                                            artsList.style.display = "none";
-                                                                            songsLt.style.display = "block";
-                                                                            genreList.style.display = "none";
-                                                                        console.log("Songs am clicked");
-                                                                        filters.style.display = "block";
-
-                                                                        const musicDat = retrieveStorage();
-                                                                        musicDat.forEach(s => {
-                                                                            const opt = document.createElement('option');
-                                                                        opt.setAttribute('value', s.song_id);
-                                                                        opt.setAttribute('textContent', s.title);
-                                                                        opt.textContent = s.title;
-                                                                        opt.songID = s.song_id;
-                                                                        opt.title = s.title;
-                                                                        opt.year = s.year;
-                                                                        opt.artistID = s.artist.id;
-                                                                        opt.artist = s.artist.name;
-                                                                        opt.genreID = s.genre.id;
-                                                                        opt.genre = s.genre.name;
-                                                                        opt.durationInSec = s.details.duration;
-                                                                        opt.bpm = s.details.bpm;
-                                                                        opt.popul = s.details.popularity;
-                                                                        opt.loudness = s.details.loudness;
-                                                                        opt.energy = s.analytics.energy;
-                                                                        opt.danceability = s.analytics.danceability;
-                                                                        opt.liveness = s.analytics.liveness;
-                                                                        opt.valence = s.analytics.valence;
-                                                                        opt.acousticness = s.analytics.acousticness;
-                                                                        opt.speechiness = s.analytics.speechiness;
-                                                                        songsLt.appendChild(opt);
-                                                                    });
-                                                                            document.querySelector("#songsList > option:nth-child(2)")
-                                                                            const slt = document.querySelectorAll("#songsList > option");
-                                                                            //Event Handlers
-                                                                            songsLt.addEventListener('input', (e) => {
-                                                                                console.log(e.target);
-                                                                                loadSongResults(e.target);
-                                                                            })
-
-                                                                        }
+    getArtistsButton.addEventListener('click', displayAllArtists);
+    getSongsButton.addEventListener('click', displayAllSongs);
+    getGenreButton.addEventListener('click', displayAllGenres);
+// addSongButton.addEventListener('click', songDisplayed(addSongButton.value));
 
 
-                                                                        function displayAllArtists() {
-                                                                            console.log("Artists am clicked");
-                                                                            artsList.style.display = "block";
-                                                                            songsLt.style.display = "none";
-                                                                            genreList.style.display = "none";
-                                                                            filters.style.display = "block";
-
-                                                                            const musicDat = retrieveStorage();
-                                                                            musicDat.forEach(a => {
-                                                                                const optA = document.createElement('option');
-                                                                                optA.setAttribute('value', a.artist.id);
-                                                                                optA.setAttribute('textContent', a.artist.name);
-                                                                                optA.textContent = a.artist.name;
-                                                                                optA.artistID = a.artist.id;
-                                                                                optA.artist = a.artist.name;
-
-                                                                                artsList.appendChild(optA);
-
-                                                                            })
-
-                                                                        artsList.addEventListener('input', (e) => {
-                                                                            console.log(e.target.value);
-                                                                            displayAllSongs();
-                                                                        })
-                                                                    }
+    fetch(songsAPI)
+        .then(resp => resp.json())
+        .then(artistsData => {
+            localStorage.setItem('musicDat', JSON.stringify(artistsData));
+        })
 
 
 
+    function displayAllSongs() {
+        artsList.style.display = "none";
+        songsLt.style.display = "block";
+        genreList.style.display = "none";
+    // console.log("Songs am clicked");
+    filters.style.display = "block";
 
-                                                                        // STORAGE FUNCTIONS
+    const optS = document.createElement("option");
+    optS.textContent = "Pick an Song";
+    optS.value = 0;
+    songsLt.appendChild(optS);
 
-                                                                        function retrieveStorage() {
-                                                                            return JSON.parse(localStorage.getItem('musicDat')) || [];
-                                                                        }
+    const musicDat = retrieveStorage();
+    musicDat.forEach(s => {
+        const opt = document.createElement('option');
+        opt.setAttribute('value', s.song_id);
+        opt.setAttribute('textContent', s.title);
+        opt.textContent = s.title;
+        opt.songID = s.song_id;
+        opt.title = s.title;
+        opt.year = s.year;
+        opt.artistID = s.artist.id;
+        opt.artist = s.artist.name;
+        opt.genreID = s.genre.id;
+        opt.genre = s.genre.name;
+        opt.durationInSec = s.details.duration;
+        opt.bpm = s.details.bpm;
+        opt.popul = s.details.popularity;
+        opt.loudness = s.details.loudness;
+        opt.energy = s.analytics.energy;
+        opt.danceability = s.analytics.danceability;
+        opt.liveness = s.analytics.liveness;
+        opt.valence = s.analytics.valence;
+        opt.acousticness = s.analytics.acousticness;
+        opt.speechiness = s.analytics.speechiness;
+        songsLt.appendChild(opt);
+    });
 
-                                                                        function updateStorage(artistsData) {
-                                                                            localStorage.setItem('musicDat', JSON.stringify(artistsData));
-                                                                        }
-
-                                                                        function emptyStorage() {
-                                                                            localStorage.removeItem('musicDat');
-                                                                        }
-                                                                        function displayAllGenres() {
-                                                                            // console.log(s.genre);
-                                                                            fetch(songsAPI)
-                                                                                .then(resp => resp.json())
-                                                                                .then(genreData => {
-                                                                                    songsList.style.display = "none";
-                                                                                    artistsList.style.display = "none";
-                                                                                    genreList.style.display = "block";
-                                                                                    genreData.forEach(g => {
-                                                                                        const optG = document.createElement("option");
-                                                                                        optG.value = g.genre.id;
-                                                                                        optG.textContent = g.genre.name;
-                                                                                        genreList.appendChild(optG);
-                                                                                })
-                                                                            })
-                                                                    }
-
-                                                                        function loadSongResults(val) {
-                                                                            console.log(val);
-
-                                                                            // const selectedSong = retrieveStorage()
-                                                                            const oneSong = val.filter(song => song.song_id = 1167);
-
-                                                                            let indexSong = [];
+    function onChange() {
+        var value = songsLt.value;
+        var text = songsLt.options[songsLt.selectedIndex].text;
+        console.log(value, text);
+        // loadSongResults(value);
+        songDisplayed(value);
+    }
+    songsLt.onchange = onChange;
+    onChange();
 
 
-                                                                            // song.filter(
-                                                                            //     oneSong => oneSong.value = val
-                                                                            // );
-                                                                            console.log(oneSong);
-                                                                            let song = val;
+}
 
-                                                                        const theList = document.querySelector("#resultsDisplay");
-                                                                        const tr1 = document.createElement("tr");
-                                                                        const td1 = document.createElement("td");
-                                                                        td1.textContent = song.title;
-                                                                        // alert(song.title);
-                                                                        tr1.appendChild(td1);
-                                                                        const td2 = document.createElement("td");
-                                                                        td2.textContent = song.artist;
-                                                                        tr1.appendChild(td2);
-                                                                        const td3 = document.createElement("td");
-                                                                        td3.textContent = song.year;
-                                                                        tr1.appendChild(td3);
-                                                                        const td4 = document.createElement("td");
-                                                                        td4.textContent = song.genre;
-                                                                        tr1.appendChild(td4);
-                                                                        const td5 = document.createElement("td");
-                                                                        td5.textContent = song.popul;
-                                                                        tr1.appendChild(td5);
-                                                                        const td6 = document.createElement("button");
-                                                                        td6.textContent = "ADD";
-                                                                        tr1.appendChild(td6);
-                                                                        theList.appendChild(tr1);
-                                                                    }
-                                                                    }) //END OF DOMLOAD
+
+    function displayAllArtists() {
+
+    artsList.style.display = "block";
+    songsLt.style.display = "none";
+    genreList.style.display = "none";
+    filters.style.display = "block";
+
+    const optA = document.createElement("option");
+    optA.textContent = "Pick an Artist";
+    optA.value = 0;
+    artsList.appendChild(optA);
+
+    const musicDat = retrieveStorage();
+    musicDat.forEach(a => {
+        const optA = document.createElement('option');
+        optA.setAttribute('value', a.artist.id);
+        optA.setAttribute('textContent', a.artist.name);
+        optA.textContent = a.artist.name;
+        optA.artistID = a.artist.id;
+        optA.artist = a.artist.name;
+
+    artsList.appendChild(optA);
+
+})
+
+    function onChangeArt() {
+        var value = artsList.value;
+        var text = artsList.options[artsList.selectedIndex].text;
+        console.log(value, text);
+        displayArtistsSongs(value);
+    }
+    artsList.onchange = onChangeArt;
+    onChangeArt();
+}
+
+    function displayArtistsSongs(val) {
+        console.log(val);
+        if (val == 0) {
+            console.log("empty ArtistsSongs");
+        } else {
+            artsList.style.display = "none";
+            songsLt.style.display = "none";
+            genreList.style.display = "none";
+            filters.style.display = "block";
+            artistSongs.style.display = "block";
+
+    const optS = document.createElement("option");
+    optS.textContent = "Pick a Song";
+    optS.value = 0;
+    artistSongs.appendChild(optS);
+
+    const musicDat = retrieveStorage();
+    const result = musicDat.filter((element) => element.artist.id == val);
+    console.log(result);
+
+
+    result.forEach(s => {
+        const opt = document.createElement('option');
+        opt.setAttribute('value', s.song_id);
+        opt.setAttribute('textContent', s.title);
+        opt.textContent = s.title;
+        opt.songID = s.song_id;
+        opt.title = s.title;
+        opt.year = s.year;
+        opt.artistID = s.artist.id;
+        opt.artist = s.artist.name;
+        // artistSongs.replaceChild(opt, artistSongs.firstChild);
+        artistSongs.appendChild(opt);
+    });
+
+    function onChangeShortList() {
+        var value = artistSongs.value;
+        var text = artistSongs.options[artistSongs.selectedIndex].text;
+        console.log(value, text);
+        songDisplayed(value);
+    }
+
+        artistSongs.onchange = onChangeShortList;
+        onChangeShortList();
+    }      
+
+}
+
+
+
+    function displayAllGenres() {
+        // console.log(s.genre);
+        fetch(songsAPI)
+            .then(resp => resp.json())
+            .then(genreData => {
+                songsList.style.display = "none";
+                artistsList.style.display = "none";
+                genreList.style.display = "block";
+                genreData.forEach(g => {
+                    const optG = document.createElement("option");
+                    optG.value = g.genre.id;
+                    optG.textContent = g.genre.name;
+                    genreList.appendChild(optG);
+                })
+            })
+    }
+
+
+}) //END OF DOMLOAD
 
 
 
 </script>
 
-<header>
+<header id="head0" class="box">
+    <section>
+        <h1>Songs and Stuff</h1>
+        <!-- Title to be dynamic later -->
+        <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
+        <button id="reloader" onClick="location.reload()">RELOAD</button>
+        <!-- <button id="showSearch" onClick="showSearchView()">showSearch</button> -->
+        <!-- <button id="showSong" onClick="showSongView()">showSong</button> -->
+        <!-- <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button> -->
+    </section>
 <section class="box">
     <h1>What I should've done</h1>
-
+<br>
     <button id="getArtists">Search By Artists</button>
 <button id="getGenres">Search By Genre</button>
 <button id="getSongs">Search By Songs</button>
@@ -230,7 +255,7 @@
 
 </section>
 
-<section id="results" class="box">
+<section id="results" class="box" style="display:block">
     <h1>Browse/Search Results</h1>
 
 <table id="resultsDisplay">
@@ -263,8 +288,23 @@
 <section id="left1" class="box">
     <h2>Song Information</h2>
     <div id="songInfos"></div>
+    <br>
     <h2>Analysis of Data</h2>
     <ul id="analysisData"></ul>
+</section>
+
+<section style="display:block" id="right3">
+
+    <div style="display:block">
+        <canvas id="myChart"></canvas>
+    </div>
+    <!-- Chart Base from: (https://www.chartjs.org) -->
+    <div id="theChartBox1">
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+
+    </div>
 </section>
 
 </main>
