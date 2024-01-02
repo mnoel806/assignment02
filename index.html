@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Matthew's Musical Adventure!</title>
 <!-- <link rel="stylesheet" href="./styleA.css"> -->
-<link rel="stylesheet" href="./styleB.css">
+<!-- <link rel="stylesheet" href="./styleB.css"> -->
+<link rel="stylesheet" href="./styleFinal.css">
 <script src="./js/myFuncts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -54,39 +55,38 @@
         artsList.style.display = "none";
         songsLt.style.display = "block";
         genreList.style.display = "none";
-    // console.log("Songs am clicked");
-    filters.style.display = "block";
+        filters.style.display = "block";
 
-    const optS = document.createElement("option");
-    optS.textContent = "Pick an Song";
-    optS.value = 0;
-    songsLt.appendChild(optS);
+        const optS = document.createElement("option");
+        optS.textContent = "Pick an Song";
+        optS.value = 0;
+        songsLt.appendChild(optS);
 
-    const musicDat = retrieveStorage();
-    musicDat.forEach(s => {
-        const opt = document.createElement('option');
-        opt.setAttribute('value', s.song_id);
-        opt.setAttribute('textContent', s.title);
-        opt.textContent = s.title;
-        opt.songID = s.song_id;
-        opt.title = s.title;
-        opt.year = s.year;
-        opt.artistID = s.artist.id;
-        opt.artist = s.artist.name;
-        opt.genreID = s.genre.id;
-        opt.genre = s.genre.name;
-        opt.durationInSec = s.details.duration;
-        opt.bpm = s.details.bpm;
-        opt.popul = s.details.popularity;
-        opt.loudness = s.details.loudness;
-        opt.energy = s.analytics.energy;
-        opt.danceability = s.analytics.danceability;
-        opt.liveness = s.analytics.liveness;
-        opt.valence = s.analytics.valence;
-        opt.acousticness = s.analytics.acousticness;
-        opt.speechiness = s.analytics.speechiness;
-        songsLt.appendChild(opt);
-    });
+        const musicDat = retrieveStorage();
+        musicDat.forEach(s => {
+            const opt = document.createElement('option');
+            opt.setAttribute('value', s.song_id);
+            opt.setAttribute('textContent', s.title);
+            opt.textContent = s.title;
+            opt.songID = s.song_id;
+            opt.title = s.title;
+            opt.year = s.year;
+            opt.artistID = s.artist.id;
+            opt.artist = s.artist.name;
+            opt.genreID = s.genre.id;
+            opt.genre = s.genre.name;
+            opt.durationInSec = s.details.duration;
+            opt.bpm = s.details.bpm;
+            opt.popul = s.details.popularity;
+            opt.loudness = s.details.loudness;
+            opt.energy = s.analytics.energy;
+            opt.danceability = s.analytics.danceability;
+            opt.liveness = s.analytics.liveness;
+            opt.valence = s.analytics.valence;
+            opt.acousticness = s.analytics.acousticness;
+            opt.speechiness = s.analytics.speechiness;
+            songsLt.appendChild(opt);
+        });
 
     function onChange() {
         var value = songsLt.value;
@@ -103,7 +103,7 @@
 
 
     function displayAllArtists() {
-
+        console.log("Still need to unify selections of artists");
     artsList.style.display = "block";
     songsLt.style.display = "none";
     genreList.style.display = "none";
@@ -188,20 +188,37 @@
 
 
     function displayAllGenres() {
-        // console.log(s.genre);
-        fetch(songsAPI)
-            .then(resp => resp.json())
-            .then(genreData => {
-                songsList.style.display = "none";
-                artistsList.style.display = "none";
-                genreList.style.display = "block";
-                genreData.forEach(g => {
-                    const optG = document.createElement("option");
-                    optG.value = g.genre.id;
-                    optG.textContent = g.genre.name;
-                    genreList.appendChild(optG);
-                })
-            })
+        console.log("Still need to unify selections of genres");
+        songsList.style.display = "none";
+        artistsList.style.display = "none";
+        genreList.style.display = "block";
+        filters.style.display = "block";
+
+        const optG = document.createElement("option");
+        optG.textContent = "Pick a Genre";
+        optG.value = 0;
+        genreList.appendChild(optG);
+
+        genreData = retrieveStorage();
+        genreData.forEach(g => {
+            const opt = document.createElement("option");
+            opt.setAttribute('value', g.genre.id);
+            opt.setAttribute('textContent', g.genre.name);
+            opt.value = g.genre.id;
+            opt.textContent = g.genre.name;
+
+            genreList.appendChild(opt);
+        })
+
+        function onChangeGenre() {
+            var value = genreList.value;
+            var text = genreList.options[genreList.selectedIndex].text;
+            console.log(value, text);
+            displayArtistsSongs(value);
+        }
+        genreList.onchange = onChangeGenre;
+        onChangeGenre();
+
     }
 
 
@@ -211,106 +228,125 @@
 
 </script>
 
-<header id="head0">
-    <section class="box">
+<div class="page-wrap">
+    <header class="page-header">
         <h1>Songs and Stuff</h1>
-        <!-- Title to be dynamic later -->
-        <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
-        <button id="reloader" onClick="location.reload()">RELOAD</button>
-        <!-- <button id="showSearch" onClick="showSearchView()">showSearch</button> -->
-        <!-- <button id="showSong" onClick="showSongView()">showSong</button> -->
-        <!-- <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button> -->
-    </section>
-    <br>
-    <section class="box">
-        <h1>What I should've done</h1>
-        <br>
-        <button id="getArtists">Search By Artists</button>
-        <button id="getGenres">Search By Genre</button>
-        <button id="getSongs">Search By Songs</button>
-        <br>
-    </section>
-</header>
-<main class="container">
-    
-<section class="box" id="filters">
-        <article>
-            <select name="theArtistsList" id="artistsList">Pick an Artist
-            </select>
+    Header => Put names and Titles here
+    </header>
+    <nav class="page-nav">
+        Put Nav Buttons Here
+        <section class="box">
+            <h1>Songs and Search</h1>
+            <!-- Title to be dynamic later -->
+            <button id="repoBtn" onClick="goToRepo()">Click => goToRepo</button>
+            <button id="reloader" onClick="location.reload()">RELOAD</button>
+            <button id="showSearch" onClick="showSearchView()">showSearch</button>
+            <button id="showSong" onClick="showSongView()">showSong</button>
+            <button id="showPlaylist" onClick="showPlaylistView()">showPlaylist</button>
+            </section>
+    </nav>
+    <main class="page-main">
+
+
+        <section id="results" class="box" style="display:block">
+            <h1>Browse/Search Results</h1>
+        
+            <table id="resultsDisplay">
+                <tr>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Year</th>
+                    <th>Genre</th>
+                    <th>Popularity</th>
+                    <th>Button</th>
+                </tr>
+            </table>
+        
+        </section>
+
+        <section id="left1" style="display:none">
+            <h1>Basic Search</h1>
+        
+        
+            <div id="searcher">
+                <select name="artistSearch" id="artistSearch" textContext="Pick me"></select>
+                <select name="songSearch" id="songSearch"></select>
+                <select name="songSearchByArt" id="songSearchByArt">"Pick me"</select>
+                <!-- <select name="genreSearch" id="genreSearch"></select> -->
+            </div>
             <br>
-        <select name="theSongsList" id="songsList" class="resultsList">Pick a Song
-        </select>
-        <br>
-        <select name="theGenreList" id="genreList">Pick Genre
-        </select>
-        <br>
-        <select name="theSongsFromArtistList" id="songsFromArtistList">Only exists if Artist Button was Clicked then an Artist
-            Selected</select>
-        </article>
-    </section>
+            <button id="btnswp01" onClick="artSongSwap()">Click to Search By Song</button>
+            <button id="btnswp02" onClick="artSongSwap()">Click to Search By Artist</button>
+        </section>
 
 
-<section id="results" class="box" style="display:block">
-    <h1>Browse/Search Results</h1>
+        <section id="left1" class="box">
+            <h2>Song Information</h2>
+            <div id="songInfos"></div>
+            <br>
+            <h2>Analysis of Data</h2>
+            <ul id="analysisData"></ul>
+        </section>
 
-<table id="resultsDisplay">
-    <tr>
-        <th>Title</th>
-        <th>Artist</th>
-        <th>Year</th>
-        <th>Genre</th>
-        <th>Popularity</th>
-        <th>Button</th>
-    </tr>
-</table>
+        <section style="display:block" id="right3" class="box">
+            <details>
+                <h1>Chart Box</h1>
+                <div style="display:block">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <!-- Chart Base from: (https://www.chartjs.org) -->
+                <div id="theChartBox1">
+                    <div>
+                        <canvas id="myChart"></canvas>
+                    </div>
 
-</section>
+                </div>
+            </details>
+        </section>
 
-<section id="left1" style="display:none">
-    <h1>Basic Search</h1>
-
-
-    <div id="searcher">
-        <select name="artistSearch" id="artistSearch" textContext="Pick me"></select>
-        <select name="songSearch" id="songSearch"></select>
-        <select name="songSearchByArt" id="songSearchByArt">"Pick me"</select>
-        <!-- <select name="genreSearch" id="genreSearch"></select> -->
-    </div>
-    <br>
-    <button id="btnswp01" onClick="artSongSwap()">Click to Search By Song</button>
-    <button id="btnswp02" onClick="artSongSwap()">Click to Search By Artist</button>
-</section>
-
-
-<section id="left1" class="box">
-    <h2>Song Information</h2>
-    <div id="songInfos"></div>
-    <br>
-    <h2>Analysis of Data</h2>
-    <ul id="analysisData"></ul>
-</section>
-
-<section style="display:block" id="right3" class="box">
-    <h1>Chart Box</h1>
-    <div style="display:block">
-        <canvas id="myChart"></canvas>
-    </div>
-    <!-- Chart Base from: (https://www.chartjs.org) -->
-    <div id="theChartBox1">
-        <div>
-            <canvas id="myChart"></canvas>
-        </div>
-
-    </div>
-</section>
+    <article>
+        <details>
+            <summary>Article</summary>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos laborum cumque incidunt, enim ipsa
+                dicta? Porro illo doloribus, consectetur eum exercitationem sit ipsam, est nesciunt maxime, eius animi
+                dolor? Harum.</p>
+        </details>
+    </article>
 
 
-</main>
-
-
-<footer>
-<h2>FOOTER</h2>
-</footer>
+    </main>
+    <aside class="page-sidebar">
+        Aside for searcher
+        <section class="box" id="Search Select">
+            <h1>Search Select</h1>
+            <br>
+            <button id="getArtists">Search By Artists</button>
+            <button id="getGenres">Search By Genre</button>
+            <button id="getSongs">Search By Songs</button>
+            <br>
+        </section>
+        <section class="box" id="filters">
+            <article>
+                <br>
+                <select name="theArtistsList" id="artistsList">Pick an Artist
+                </select>
+    
+                <select name="theSongsList" id="songsList" class="resultsList">Pick a Song
+                </select>
+            
+            <select name="theGenreList" id="genreList">Pick Genre
+            </select>
+            
+            <select name="theSongsFromArtistList" id="songsFromArtistList">Only exists if Artist Button was Clicked then an
+                Artist
+                Selected</select>
+            </article>
+            </section>
+            </aside>
+            <footer class="page-footer">
+                Footer
+            </footer>
+</div>
 </body>
 <!-- Putting Scripts Here -->
 
